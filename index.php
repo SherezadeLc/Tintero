@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tintero</title>
     <link rel="shortcut icon" href="../img/icono.jpg" type="image/x-icon" id="ico">
-    <link rel="stylesheet" type="text/css" href="../css/estilo.css">
-    <script src="../javascript/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/estilo.css">
+    <script src="./javascript/script.js"></script>
 
 </head>
 <body>
@@ -15,7 +15,7 @@
     <div>
         <header>
             <div class="contenedor-logo">
-                <img src="../img/fondomof.webp"class="logo">
+                <img src="./img/fondomof.webp"class="logo">
             </div>
             <div class="contenedor-nav">
                 <div class="buscador">
@@ -48,7 +48,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/El Ascenso de un Imperio.jpeg" alt="Portada de El Ascenso de un Imperio" />
+                        <img class="diapositiva" src="./img_portada/El Ascenso de un Imperio.jpeg" alt="Portada de El Ascenso de un Imperio" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -59,7 +59,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/El circo de la noche.jpg" alt="Portada de El Circo de la Noche" />
+                        <img class="diapositiva" src="./img_portada/El circo de la noche.jpg" alt="Portada de El Circo de la Noche" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -72,7 +72,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/El Laberinto de los Susurros.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/El Laberinto de los Susurros.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -82,7 +82,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/Hestia.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/Hestia.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -92,7 +92,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/La Revelación.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/La Revelación.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -102,7 +102,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/Las mil y una noches.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/Las mil y una noches.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -112,7 +112,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/Los Juicios de Salem.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/Los Juicios de Salem.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -122,7 +122,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/Reyes caídos.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/Reyes caídos.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
@@ -142,7 +142,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/Utopia.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/Utopia.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
