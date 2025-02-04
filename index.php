@@ -132,7 +132,7 @@
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img class="diapositiva" src="../img_portada/Todas las hadas del reino.jpeg" alt="Portada de El Laberinto de los Susurros" />
+                        <img class="diapositiva" src="./img_portada/Todas las hadas del reino.jpeg" alt="Portada de El Laberinto de los Susurros" />
                     </div>
                     <div class="flip-card-back">
                         <!-- Contenido adicional en el reverso de la tarjeta -->
