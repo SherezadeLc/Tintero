@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tintero</title>
-    <link rel="shortcut icon" href="../img/icono.jpg" type="image/x-icon" id="ico">
+    <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
     <link rel="stylesheet" type="text/css" href="./css/estilo.css">
     <script src="./javascript/script.js"></script>
 </head>
@@ -14,9 +14,6 @@
     ?>
     <div>
         <header>
-            <div class="contenedor-logo">
-                <img src="./img/fondomof.webp" class="logo">
-            </div>
             <div class="contenedor-nav">
                 <div class="buscador">
                     <form method="get">
@@ -37,6 +34,9 @@
                         </ul>
                     </div>
                 </nav>
+            </div>
+            <div class="contenedor-logo">
+                <img src="./img/fondomof.webp" class="logo">
             </div>
         </header>
     </div>
