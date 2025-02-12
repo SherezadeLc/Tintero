@@ -1,84 +1,92 @@
 <!DOCTYPE html>
+<?php
+session_start(); // Inicia la sesión para almacenar datos de sesión como el rol del usuario
+?>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tintero</title>
-    <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-    <link rel="stylesheet" type="text/css" href="./css/estilo.css">
-    <script src="./javascript/script.js"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tintero</title>
+        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
+        <link rel="stylesheet" type="text/css" href="./css/estilo.css">
+        <script src="./javascript/script.js"></script>
+    </head>
     <?php
-    // Aquí puedes agregar cualquier lógica PHP que necesites
-    ?>
-    <div>
-        <header>
-            <div class="contenedor-nav">
-                <div class="buscador">
-                    <form method="get">
-                        <fieldset>
-                           <input type="text" id="input-buscar" name="buscar" placeholder="Buscar" />
-                           <input id="boton-buscar" type="submit" value=" Buscar" />
-                           <i class="icono-buscar"></i>
-                        </fieldset>
-                     </form>
-                </div>
-                
-                <nav>
-                    <div class="barra">
-                        <ul>
-                            <li><a href="#">Categorías</a></li>
-                            <li><a href="#">Biblioteca</a></li>   
-                            <li><a href="#">Perfil</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <div class="contenedor-logo">
-                <img src="./img/fondomof.webp" class="logo">
-            </div>
-        </header>
-    </div>
-    <div class="contenedor-h2">
-        <h2 class="colorear">Novedades</h2>
-    </div>
-    <section id="Novedades" class="contenedor-carrusel">
-        <div class="carrusel">
-            <?php
-            // Array de imágenes y títulos
-            $libros = [
-                ["src" => "./img_portada/El Ascenso de un Imperio.jpeg", "alt" => "Portada de El Ascenso de un Imperio"],
-                ["src" => "./img_portada/El circo de la noche.jpg", "alt" => "Portada de El Circo de la Noche"],
-                ["src" => "./img_portada/El Laberinto de los Susurros.jpeg", "alt" => "Portada de El Laberinto de los Susurros"],
-                ["src" => "./img_portada/Hestia.jpeg", "alt" => "Portada de Hestia"],
-                ["src" => "./img_portada/La Revelación.jpeg", "alt" => "Portada de La Revelación"],
-                ["src" => "./img_portada/Las mil y una noches.jpeg", "alt" => "Portada de Las mil y una noches"],
-                ["src" => "./img_portada/Los Juicios de Salem.jpeg", "alt" => "Portada de Los Juicios de Salem"],
-                ["src" => "./img_portada/Reyes caídos.jpeg", "alt" => "Portada de Reyes caídos"],
-                ["src" => "./img_portada/Todas las hadas del reino.jpeg", "alt" => "Portada de Todas las hadas del reino"],
-                ["src" => "./img_portada/Utopia.jpeg", "alt" => "Portada de Utopia"],
-            ];
+    // Conectamos a la base de datos
+    $conexion = mysqli_connect("localhost", "root", "", "tintero");
 
-            // Generar las tarjetas de los libros
-            foreach ($libros as $libro) {
-                echo '<div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img class="diapositiva" src="' . $libro['src'] . '" alt="' . $libro['alt'] . '" />
-                            </div>
-                            <div class="flip-card-back">
-                                <!-- Contenido adicional en el reverso de la tarjeta -->
-                            </div>
+    // Verificamos si la conexión fue exitosa
+    if (!$conexion) {
+        die("Error de conexión: " . mysqli_connect_error());
+    }
+
+    // Consulta para obtener los libros publicados
+    $consulta = "SELECT Titulo FROM libro_video WHERE Tipo = 'Libro' AND Estado = 'Publicado'";
+    $resultado = mysqli_query($conexion, $consulta);
+
+    $libros = [];
+
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $libros[] = [
+                "src" => "./img_portada/" . $fila["Titulo"] . ".jpeg",
+                "alt" => "Portada de " . $fila["Titulo"]
+            ];
+        }
+    }
+    ?>
+    <body>
+        <?php
+        // Aquí puedes agregar cualquier lógica PHP que necesites
+        ?>
+        <div>
+            <header>
+                <div class="contenedor-nav">
+                    <div class="buscador">
+                        <form method="get">
+                            <fieldset>
+                                <input type="text" id="input-buscar" name="buscar" placeholder="Buscar" />
+                                <input id="boton-buscar" type="submit" value=" Buscar" />
+                                <i class="icono-buscar"></i>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <nav>
+                        <div class="barra">
+                            <ul>
+                                <li><a href="#">Categorías</a></li>
+                                <li><a href="#">Biblioteca</a></li>   
+                                <li><a href="#">Perfil</a></li>
+                                <li><a href="#">Iniciar sesión/Registrarse</a></li>
+                            </ul>
                         </div>
-                    </div>';
-            }
-            ?>
+                    </nav>
+                </div>
+                <div class="contenedor-logo">
+                    <img src="./img/fondomof.webp" class="logo">
+                </div>
+            </header>
         </div>
-    </section>
-    
-    <div class="contenedor-h2">
-        <h2 class="colorear">Recomendaciones</h2>
-    </div>
-</body>
+        <div class="contenedor-h2">
+            <h2 class="colorear">Novedades</h2>
+        </div>
+        <section id="Novedades" class="contenedor-carrusel">
+            <div class="carrusel">
+                <?php foreach ($libros as $libro): ?>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="<?php echo $libro['src']; ?>" alt="<?php echo $libro['alt']; ?>" />
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            </div>
+        </section>
+
+        <div class="contenedor-h2">
+            <h2 class="colorear">Recomendaciones</h2>
+        </div>
+    </body>
 </html>
