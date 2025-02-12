@@ -58,7 +58,7 @@ session_start(); // Inicia la sesión para almacenar datos de sesión como el ro
                                 <li><a href="#">Categorías</a></li>
                                 <li><a href="#">Biblioteca</a></li>   
                                 <li><a href="#">Perfil</a></li>
-                                <li><a href="#">Iniciar sesión/Registrarse</a></li>
+                                <li><a href="login.php">Iniciar sesión/Registrarse</a></li>
                             </ul>
                         </div>
                     </nav>
