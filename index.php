@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start(); // Inicia la sesión para almacenar datos de sesión como el rol del usuario
+//Holi
 ?>
 <html lang="es">
     <head>
