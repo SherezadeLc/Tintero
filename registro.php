@@ -54,18 +54,28 @@ and open the template in the editor.
             } else {
                 //aqui insertamos el usuario en la base de datos 
                 $sql = "INSERT INTO usuario( Nombre, Apellido, Correo_Electronico, Contrasena,Fecha_Registro) VALUES ('$nombre','$apellido','$email','$contrasena',' $fecha_actual')";
-                //aqui hacemos la conexion para introducirlo a la base de datos
-                if (mysqli_query($conexion, $sql)) {
-                    //si esta todo bien sale un mensaje en verde
-                    echo "<p style='color:green;'>Usuario registrado con éxito</p>";
-                } else {
-                    //si hay algun error sale un mensaje en rojo
-                    echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
-                }
-                $fechaActual = date("Y-m-d");
+                 $fechaActual = date("Y-m-d");
                 $sql_coger_info_id_usu= "SELECT ID_Usuario FROM usuario WHERE Correo_Electronico = '$email'";
                 $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','null','0.00','$sql_coger_info_id_usu','1')";
                 
+                //aqui hacemos la conexion para introducirlo a la base de datos
+                if (mysqli_query($conexion, $sql)) {
+                  
+                     if (mysqli_query($conexion, $sql_insert_suscripcion)) 
+                      {
+                        //si esta todo bien sale un mensaje en verde
+                          echo "<p style='color:green;'>Usuario registrado con éxito</p>";
+                       } else {
+                    //si hay algun error sale un mensaje en rojo
+                    echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
+                }
+                    
+                } else {
+                    
+                    //si hay algun error sale un mensaje en rojo
+                    echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
+                }
+               
             }
         }
 
