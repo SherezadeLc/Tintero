@@ -64,7 +64,7 @@ and open the template in the editor.
                 }
                 $fechaActual = date("Y-m-d");
                 $sql_coger_info_id_usu= "SELECT ID_Usuario FROM usuario WHERE Correo_Electronico = '$email'";
-                $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','null','[value-4]','$sql_coger_info_id_usu','[value-6]')";
+                $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','null','0.00','$sql_coger_info_id_usu','1')";
                 
             }
         }
