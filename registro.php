@@ -63,6 +63,9 @@ and open the template in the editor.
                     //si hay algun error sale un mensaje en rojo
                     echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
                 }
+                $fechaActual = date("Y-m-d");
+                $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','[value-3]','[value-4]','[value-5]','[value-6]')";
+                
             }
         }
 
