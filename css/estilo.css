@@ -74,31 +74,42 @@ nav ul li a:hover {
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    gap: 100px;
+    gap: 10px;
+    margin: 20px 0;
 }
 
 #input-buscar {
-    width: 350px;
-    height: 30px;
+    width: 300px;
+    height: 35px;
     border: none;
     outline: none;
-    border-radius: 15px;
+    border-radius: 20px;
+    padding: 0 15px;
     text-align: center;
+    font-size: 1rem;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 #boton-buscar {
     width: 100px;
-    height: 30px;
+    height: 35px;
     border: none;
     outline: none;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 #boton-buscar:hover {
     background-color: #110011;
     color: #DDCCDD;
-    border-radius: 15px;
 }
 
 .contenedor-nav {
@@ -223,24 +234,6 @@ h2 {
     margin-right: 0;
   }
 
-  .buscador {
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  #input-buscar {
-    width: 80%;
-    height: 40px;
-    font-size: 1rem;
-  }
-
-  #boton-buscar {
-    width: 50%;
-    height: 40px;
-    font-size: 1rem;
-  }
-
   .contenedor-nav {
     flex-direction: column;
     align-items: center;
@@ -277,22 +270,6 @@ h2 {
     margin-right: 0;
   }
 
-  .buscador {
-    flex-direction: row;
-    justify-content: center;
-    gap: 30px;
-  }
-
-  #input-buscar {
-    width: 300px;
-    height: 35px;
-  }
-
-  #boton-buscar {
-    width: 120px;
-    height: 35px;
-  }
-
   .carrusel {
     width: 80%;
   }
@@ -323,15 +300,5 @@ h2 {
     gap: 100px;
     justify-content: center;
     margin-right: 500px;
-  }
-
-  .buscador {
-    flex-direction: row;
-    gap: 100px;
-  }
-
-  #input-buscar,
-  #boton-buscar {
-    height: 30px;
   }
 }
