@@ -35,8 +35,7 @@ and open the template in the editor.
 
 
         <?php
-        //obtener la fecha actual
-        $fecha_actual = date("Y-m-d");
+       
 
         //aqui hacemos la conexion a la base de datos
         $conexion = mysqli_connect("localhost", "root", "", "tintero") or die("No se puede conectar con el servidor o seleccionar la base de datos");
@@ -64,7 +63,8 @@ and open the template in the editor.
                     echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
                 }
                 $fechaActual = date("Y-m-d");
-                $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','[value-3]','[value-4]','[value-5]','[value-6]')";
+                $sql_coger_info_id_usu= "SELECT ID_Usuario FROM usuario WHERE Correo_Electronico = '$email'";
+                $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','null','[value-4]','$sql_coger_info_id_usu','[value-6]')";
                 
             }
         }
