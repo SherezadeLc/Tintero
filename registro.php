@@ -66,30 +66,25 @@ and open the template in the editor.
                 
                 echo "<p style='color:red;'>Correo inválido</p>";
             } else {
-                //aqui insertamos el usuario en la base de datos 
-                $sql = "INSERT INTO usuario( Nombre, Apellido, Correo_Electronico, Contrasena,Fecha_Registro) VALUES ('$nombre','$apellido','$email','$contrasena',' $fecha_actual')";
-                 $fechaActual = date("Y-m-d");
-                $sql_coger_info_id_usu= "SELECT ID_Usuario FROM usuario WHERE Correo_Electronico = '$email'";
-                $sql_insert_suscripcion= "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) VALUES ('$fechaActual','null','0.00','$sql_coger_info_id_usu','1')";
-                
-                //aqui hacemos la conexion para introducirlo a la base de datos
+               $fechaActual = date("Y-m-d");
+                $sql = "INSERT INTO usuario( Nombre, Apellido, Correo_Electronico, Contrasena, Fecha_Registro) 
+                        VALUES ('$nombre', '$apellido', '$email', '$contrasena', '$fechaActual')";
+
                 if (mysqli_query($conexion, $sql)) {
-                  
-                     if (mysqli_query($conexion, $sql_insert_suscripcion)) 
-                      {
-                        //si esta todo bien sale un mensaje en verde
-                          echo "<p style='color:green;'>Usuario registrado con éxito</p>";
-                       } else {
-                    //si hay algun error sale un mensaje en rojo
-                    echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
-                }
-                    
+                    $id_usuario = mysqli_insert_id($conexion); // ← obtenemos el ID del usuario recién insertado
+
+                    $sql_insert_suscripcion = "INSERT INTO suscripcion(`Fecha_Inicio`, `Fecha_Finalizacion`, `Precio`, `ID_Usuario`, `id_plan`) 
+                    VALUES ('$fechaActual', NULL, '0.00', '$id_usuario', '1')";
+
+                    if (mysqli_query($conexion, $sql_insert_suscripcion)) {
+                        echo "<p style='color:green;'>Usuario registrado con éxito</p>";
+                    } else {
+                        echo "<p style='color:red;'>Error en la suscripción: " . mysqli_error($conexion) . "</p>";
+                    }
+
                 } else {
-                    
-                    //si hay algun error sale un mensaje en rojo
-                    echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
+                    echo "<p style='color:red;'>Error al registrar usuario: " . mysqli_error($conexion) . "</p>";
                 }
-               
             }
         }
 
