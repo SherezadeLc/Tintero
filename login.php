@@ -98,25 +98,25 @@ and open the template in the editor.
                 if ($_SESSION['plan_suscripcion'] == 'Plan_Basico')
                 {
 
-                    header('Location: previsualizacion.php');
+                    header('Location: menuPlanBasico.php');
                     exit;
                 }
                 if ($_SESSION['plan_suscripcion'] == 'Plan_Estandar')
                 {
 
-                    header('Location: previsualizacion.php');
+                    header('Location: menuPlanEstandar.php');
                     exit;
                 }
                 if ($_SESSION['plan_suscripcion'] == 'Plan_Premium')
                 {
 
-                    header('Location: previsualizacion.php');
+                    header('Location: menuPlanPremium.php');
                     exit;
                 }
                 if ($_SESSION['plan_suscripcion'] == 'Mes_prueba')
                 {
 
-                    header('Location: previsualizacion.php');
+                    header('Location: menuPlanPremium.php');
                     exit;
                 }
                 
