@@ -49,7 +49,7 @@ session_start();
         </div>
         <header>
             <div class="contenedor-logo">
-                <img src="./img/fondomof.webp" class="logo">
+                <img src="./img/FondoTintero.png" class="logo">
             </div>
             <div class="contenedor-nav">
                 <!-- Buscador -->
