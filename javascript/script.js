@@ -44,18 +44,43 @@ document.addEventListener('DOMContentLoaded', function () {
 /*-----------------------------------------------------------------------------*/
 /*REGISTRO*/
 /*-----------------------------------------------------------------------------*/
-// Validación de correo
-function validarCorreo() {
-    const emailInput = document.getElementById('email');
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtener el formulario y el mensaje de error
+    const form = document.querySelector('form');
     const errorMessage = document.getElementById('error-message');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Función para validar el correo electrónico
+    function validarCorreo() {
+        const email = document.getElementById('email').value;
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(emailInput.value)) {
-        errorMessage.style.display = 'block';
-        return false;
-    } else {
-        errorMessage.style.display = 'none';
-        return true;
+        if (!regex.test(email)) {
+            errorMessage.style.display = 'block';
+            return false;
+        } else {
+            errorMessage.style.display = 'none';
+            return true;
+        }
     }
-}
+
+    // Animación de entrada para el formulario
+    form.style.opacity = 0;
+    form.style.transform = 'translateY(50px)';
+    form.style.transition = 'all 0.5s ease';
+
+    setTimeout(() => {
+        form.style.opacity = 1;
+        form.style.transform = 'translateY(0)';
+    }, 100);
+
+    // Animación de botón al hacer hover
+    const buttons = document.querySelectorAll('input[type="submit"], .login-button');
+    buttons.forEach(button => {
+        button.addEventListener('mouseover', () => {
+            button.style.transform = 'scale(1.1)';
+        });
+        button.addEventListener('mouseout', () => {
+            button.style.transform = 'scale(1)';
+        });
+    });
+});

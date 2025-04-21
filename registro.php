@@ -14,31 +14,34 @@ and open the template in the editor.
         <script src="./javascript/script.js"></script>
     </head>
     <body>
-        <h2>Registro</h2>
-        <form method="POST" onsubmit="return validarCorreo()">
-            <label>Nombre:</label>
-            <input type="text" name="nombre" required><br>
+        <div class="contenedor-registro">
+            <h2>Registro</h2>
+            <form method="POST" onsubmit="return validarCorreo()">
+                <label>Nombre:</label>
+                <input type="text" name="nombre" required><br>
 
-            <label>Apellido:</label>
-            <input type="text" name="apellido" required><br>
+                <label>Apellido:</label>
+                <input type="text" name="apellido" required><br>
 
-            <label>Correo electrónico:</label>
-            <input type="email" name="email" id="email" required>
-            <span id="error-message">Correo inválido</span><br>
+                <label>Correo electrónico:</label>
+                <input type="email" name="email" id="email" required>
+                <span id="error-message">Correo inválido</span><br>
 
-            <label>Contraseña:</label>
-            <input type="password" name="contrasena" required><br>
+                <label>Contraseña:</label>
+                <input type="password" name="contrasena" required><br>
 
-            <input type="submit" value="Registrar">
-        </form>
+                <input type="submit" value="Registrar">
+            </form>
 
-        <p>¿Ya tienes cuenta?</p>
-        <a href="login.php"><button class="login-button">Iniciar sesión</button></a>
-        <p>¿No quieres registrarte? <a href="index.php">Pulsa aquí</a></p>
+            <p>¿Ya tienes cuenta?</p>
+            <a href="login.php"><button class="login-button">Iniciar sesión</button></a>
+            <p>¿No quieres registrarte? <a href="index.php">Pulsa aquí</a></p>
+        </div>
         <?php
-        //aqui hacemos la conexion a la base de datos
-        $conexion = mysqli_connect("localhost", "root", "", "tintero") or die("No se puede conectar con el servidor o seleccionar la base de datos");
-
+        $conexion = mysqli_connect("localhost", "root", "", "tintero");
+        if (!$conexion) {
+            die("Error de conexión: " . mysqli_connect_error());
+        }
         //aqui comprobamos si se ha pulsado a enviar
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar'])) {
             @$nombre = $_POST['nombre'];
