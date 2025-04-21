@@ -53,7 +53,7 @@ header .logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-   
+
 }
 
 header .logo:hover {
@@ -136,7 +136,7 @@ fieldset {
 .contenerdor-h2 {
     border-radius: 15px;
     box-shadow: -1px -1px 6px 0 rgb(243, 243, 243),
-                4px 4px 16px 2px rgb(124, 187, 255);
+        4px 4px 16px 2px rgb(124, 187, 255);
 }
 
 h2 {
@@ -144,9 +144,9 @@ h2 {
     font-size: 40px;
     color: white;
     text-shadow: 0 0 10px rgb(255, 217, 105),
-                 0 0 20px rgb(255, 217, 105),
-                 0 0 40px rgb(255, 217, 105),
-                 0 0 80px rgb(255, 217, 105);
+        0 0 20px rgb(255, 217, 105),
+        0 0 40px rgb(255, 217, 105),
+        0 0 80px rgb(255, 217, 105);
 }
 
 .contenedor-carrusel {
@@ -218,4 +218,37 @@ h2 {
 
 .diapositiva:hover {
     cursor: pointer;
+}
+/*REGISTRO*/
+.parallax {
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  perspective: 1px;
+}
+
+.grupo-parallax {
+  position: relative;
+  height: 500px;
+  transform-style: preserve-3d;
+}
+
+.capa-parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.capa-base {
+  transform: translateZ(0);
+}
+
+.capa-fondo {
+  transform: translateZ(-1px) scale(2);
+}
+
+.capa-primer-plano {
+  transform: translateZ(-2px) scale(3);
 }

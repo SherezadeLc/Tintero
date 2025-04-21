@@ -1,5 +1,7 @@
 "use strict";
-
+/*-----------------------------------------------------------------------------*/
+/*MENU*/
+/*-----------------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
     const diapositivas = document.querySelector('.carrusel');
     const imagenes = Array.from(diapositivas.querySelectorAll('img'));
@@ -75,3 +77,29 @@ function validarCorreo() {
     }
     return true; // Envía el formulario si es válido
 }
+/*-----------------------------------------------------------------------------*/
+/*REGISTRO*/
+/*-----------------------------------------------------------------------------*/
+// Espera a que se cargue todo el contenido de la página
+document.addEventListener('DOMContentLoaded', function () {
+    // Selecciona todas las capas que tienen la clase 'capa-parallax'
+    var capasParallax = document.querySelectorAll('.capa-parallax');
+
+    // Función que se encarga de aplicar el efecto parallax
+    function aplicarParallax() {
+        // Obtiene la posición actual del scroll vertical
+        var posicionScroll = window.pageYOffset;
+
+        // Recorre cada una de las capas parallax
+        for (var i = 0; i < capasParallax.length; i++) {
+            // Obtiene la velocidad de la capa (si no tiene, se usa 1 por defecto)
+            var velocidad = capasParallax[i].dataset.velocidad || 1;
+
+            // Aplica el efecto de translación vertical a cada capa
+            capasParallax[i].style.transform = 'translateY(' + (posicionScroll * velocidad) + 'px)';
+        }
+    }
+
+    // Agrega un evento de 'scroll' a la ventana, que llama a la función 'aplicarParallax' cada vez que se hace scroll
+    window.addEventListener('scroll', aplicarParallax);
+});
