@@ -10,12 +10,13 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tintero</title>
         <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-        <link rel="stylesheet" type="text/css" href="./css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
         <script src="./javascript/script.js"></script>
     </head>
-    <body>
+    <body class="loaded">
         <div class="contenedor-registro">
             <h2>Registro</h2>
+            <hr><br>
             <form method="POST" onsubmit="return validarCorreo()">
                 <label>Nombre:</label>
                 <input type="text" name="nombre" required><br>
