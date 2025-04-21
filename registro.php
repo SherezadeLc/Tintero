@@ -7,50 +7,35 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Registro</title>
-        <script src="./javascript/script.js" defer></script> <!-- Carga el JS -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tintero</title>
+        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
         <link rel="stylesheet" type="text/css" href="./css/estilo.css">
+        <script src="./javascript/script.js"></script>
     </head>
     <body>
-        <div class="parallax">
-        <div class="grupo-parallax">
-            <div class="capa-parallax capa-base">
-                <div class="contenerdor-h2">
-                    <h2>Registro</h2>
-                </div>
-                <form method="POST" onsubmit="return validarCorreo()">
-                    <label>Nombre:</label>
-                    <input type="text" name="nombre" required><br><br>
-                    <label>Apellido:</label>
-                    <input type="text" name="apellido" required><br><br>
-                    <label>Correo electronico:</label>
-                    <input type="text" name="email" required>
-                    <span id="error-message">Correo inválido</span>
-                    <br><br>
-                    <label>Contraseña:</label>
-                    <input type="password" name="contrasena" required><br><br>
+        <h2>Registro</h2>
+        <form method="POST" onsubmit="return validarCorreo()">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required><br>
 
-                    <input type="submit" name="enviar" value="Registrar">
-                </form>
-            </div>
-            <div class="capa-parallax capa-fondo">
-                <img src="./img/foto1.jpeg" alt="Imagen de Fondo">
-            </div>
-            <div class="capa-parallax capa-primer-plano">
-                <img src="" alt="Imagen de Primer Plano">
-            </div>
-        </div>
-    </div>
+            <label>Apellido:</label>
+            <input type="text" name="apellido" required><br>
 
-    <hr>
-    <p>¿Ya te has registrado?</p>
-    <a href="login.php"><button class="login-button">Iniciar sesión</button></a><br><br>
-    <p>Si no quieres registrar <a href="index.php">Pulsa aqui</a></p>
+            <label>Correo electrónico:</label>
+            <input type="email" name="email" id="email" required>
+            <span id="error-message">Correo inválido</span><br>
 
+            <label>Contraseña:</label>
+            <input type="password" name="contrasena" required><br>
 
+            <input type="submit" value="Registrar">
+        </form>
+
+        <p>¿Ya tienes cuenta?</p>
+        <a href="login.php"><button class="login-button">Iniciar sesión</button></a>
+        <p>¿No quieres registrarte? <a href="index.php">Pulsa aquí</a></p>
         <?php
-       
-
         //aqui hacemos la conexion a la base de datos
         $conexion = mysqli_connect("localhost", "root", "", "tintero") or die("No se puede conectar con el servidor o seleccionar la base de datos");
 
@@ -63,10 +48,10 @@ and open the template in the editor.
 
             //aqui pasa un filtro para saber si tiene las caracteristicas que se necesitan del correo
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                
+
                 echo "<p style='color:red;'>Correo inválido</p>";
             } else {
-               $fechaActual = date("Y-m-d");
+                $fechaActual = date("Y-m-d");
                 $sql = "INSERT INTO usuario( Nombre, Apellido, Correo_Electronico, Contrasena, Fecha_Registro) 
                         VALUES ('$nombre', '$apellido', '$email', '$contrasena', '$fechaActual')";
 
@@ -81,7 +66,6 @@ and open the template in the editor.
                     } else {
                         echo "<p style='color:red;'>Error en la suscripción: " . mysqli_error($conexion) . "</p>";
                     }
-
                 } else {
                     echo "<p style='color:red;'>Error al registrar usuario: " . mysqli_error($conexion) . "</p>";
                 }
