@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -18,6 +21,8 @@ and open the template in the editor.
     <body>
         <?php
         // put your code here
+        // Conexión a la base de datos
+        $conexion = mysqli_connect("localhost", "root", "", "tintero");
         ?>
     </body>
 </html>
