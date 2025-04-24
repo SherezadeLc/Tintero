@@ -64,11 +64,12 @@ session_start();
                 <nav class="nav-center">
                     <ul>
                         <li><a href="#">Categorías</a></li>
-                        <li><a href="#">Biblioteca</a></li>   
+                        <li><a href="#">Biblioteca</a></li>
                         <li><a href="#">Perfil</a></li>
+                        <li><a href="#">Crea un nuevo universo</a></li>
+                        <li><a href="#">Mis universos</a></li>
                     </ul>
                 </nav>
-
                 <!-- Login -->
                 <div class="nav-right">
                     <a href="login.php">Iniciar sesión/Registrarse</a>
@@ -76,7 +77,7 @@ session_start();
             </div>
 
 
-        </header>
+        </header> 
 
         <div class="contenedor-h2">
             <h2 class="colorear">Novedades</h2>

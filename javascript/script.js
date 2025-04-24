@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Cambiar las imágenes automáticamente cada 5 segundos
     setInterval(siguienteDiapositiva, 5000);
 });
+
+
 /*-----------------------------------------------------------------------------*/
 /*REGISTRO*/
 /*-----------------------------------------------------------------------------*/
@@ -60,13 +62,13 @@ function validarCorreo() {
 }
 
 // Evento para manejar el envío del formulario
-document.querySelector('form').addEventListener('submit', function(event) {
+document.querySelector('form').addEventListener('submit', function (event) {
     event.preventDefault(); // Evitar el envío inmediato
     if (validarCorreo()) { // Validar el correo antes de enviar
         const contenedor = document.querySelector('.contenedor-registro');
         contenedor.style.transform = 'translateY(-50px)'; // Desplazar hacia arriba
         contenedor.style.opacity = '0'; // Desvanecer el contenedor
-        
+
         // Simular un retraso antes de enviar el formulario
         setTimeout(() => {
             this.submit(); // Enviar el formulario después de la animación
@@ -75,6 +77,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
 });
 
 // Evento para cargar la clase 'loaded' en el body
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     document.body.classList.add('loaded'); // Agregar clase para el efecto de desvanecimiento
 });
