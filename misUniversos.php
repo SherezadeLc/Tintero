@@ -7,7 +7,7 @@ if (!isset($_SESSION["id_usuario"])) {
     exit();
 }
 
-$id_usuario = $_SESSION["id_usuario"];
+$id_usuario = $_SESSION['id_usuario'];
 
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 
@@ -15,14 +15,13 @@ if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Obtener historias del usuario
-$sql = "SELECT id_historia, titulo, portada FROM historias WHERE id_usuario = '$id_usuario'";
+// *** Aquí usa el nombre correcto de la columna ***
+$sql = "SELECT ID_Contenido, Titulo, portada FROM libro_video WHERE ID_Autor = '$id_usuario'";
 $resultado = mysqli_query($conexion, $sql);
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
+    <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tintero</title>
@@ -30,26 +29,26 @@ $resultado = mysqli_query($conexion, $sql);
         <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
         <script src="./javascript/script.js"></script>
     </head>
-<body>
+    <body>
 
-<h1>Mis Historias</h1>
+        <h1>Mis Historias</h1>
 
-<div class="contenedor-historias">
-    <?php
-    if (mysqli_num_rows($resultado) > 0) {
-        while ($historia = mysqli_fetch_assoc($resultado)) {
-            echo "<div class='tarjeta-historia'>";
-            echo "<img src='./portadas/" . htmlspecialchars($historia['portada']) . "' alt='Portada'>";
-            echo "<div class='titulo-historia'>" . htmlspecialchars($historia['titulo']) . "</div>";
-            echo "</div>";
-        }
-    } else {
-        echo "<p>No has creado ninguna historia todavía.</p>";
-    }
+        <div class="contenedor-historias">
+            <?php
+            if (mysqli_num_rows($resultado) > 0) {
+                while ($historia = mysqli_fetch_assoc($resultado)) {
+                    echo "<div class='tarjeta-historia'>";
+                    echo "<img src='./portadas/" . htmlspecialchars($historia['portada']) . "' alt='Portada'>";
+                    echo "<div class='titulo-historia'>" . htmlspecialchars($historia['Titulo']) . "</div>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<p>No has creado ninguna historia todavía.</p>";
+            }
 
-    mysqli_close($conexion);
-    ?>
-</div>
+            mysqli_close($conexion);
+            ?>
+        </div>
 
-</body>
+    </body>
 </html>
