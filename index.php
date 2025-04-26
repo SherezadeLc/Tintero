@@ -66,8 +66,8 @@ session_start();
                         <li><a href="#">Categorías</a></li>
                         <li><a href="#">Biblioteca</a></li>
                         <li><a href="#">Perfil</a></li>
-                        <li><a href="#">Crea un nuevo universo</a></li>
-                        <li><a href="#">Mis universos</a></li>
+                        <li><a href="creaUniveros.php">Crea un nuevo universo</a></li>
+                        <li><a href="misUniversos.php">Mis universos</a></li>
                     </ul>
                 </nav>
                 <!-- Login -->
