@@ -86,13 +86,13 @@ session_start();
 
                     // Redireccionar según el plan
                     if ($_SESSION['plan_suscripcion'] == 'Plan_Basico') {
-                        header('Location: index.php');
+                        header('Location: menuSuscrito.php');
                         exit;
                     } elseif ($_SESSION['plan_suscripcion'] == 'Plan_Estandar') {
-                        header('Location: index.php');
+                        header('Location: menuSuscrito.php');
                         exit;
                     } elseif ($_SESSION['plan_suscripcion'] == 'Plan_Premium' || $_SESSION['plan_suscripcion'] == 'Mes_prueba') {
-                        header('Location: index.php');
+                        header('Location: menuSuscrito.php');
                         exit;
                     }
                 } else {
