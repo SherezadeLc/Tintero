@@ -89,11 +89,12 @@ session_start();
             $titulo = $_POST['titulo'];
             $descripcion = $_POST['descripcion'];
             $id_categoria = $_POST['categoria'];
+            $fechaActual = date("Y-m-d");
 
             $nombreImagen = '';
-            if (isset($_FILES['img_portada']) && $_FILES['img_portada']['error'] === UPLOAD_ERR_OK) {
-                $nombreTemporal = $_FILES['img_portada']['tmp_name'];
-                $nombreOriginal = basename($_FILES['img_portada']['name']);
+            if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
+                $nombreTemporal = $_FILES['imagen_portada']['tmp_name'];
+                $nombreOriginal = basename($_FILES['imagen_portada']['name']);
                 $carpetaDestino = 'img_portada/';
 
                 if (!file_exists($carpetaDestino)) {
@@ -108,10 +109,10 @@ session_start();
                 }
             }
 
-            $sql = "INSERT INTO libro_video (Titulo, Descripcion, portada, id_categoria) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO libro_video (Titulo, Descripcion, portada, id_categoria, Fecha_Publicacion) VALUES (?, ?, ?, ?,?)";
 
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param('sssi', $titulo, $descripcion, $id_categoria, $nombreImagen);
+            $stmt->bind_param('sssi', $titulo, $descripcion, $nombreImagen, $id_categoria);
 
             if ($stmt->execute()) {
                 echo '<p>Historia guardada correctamente.</p>';
