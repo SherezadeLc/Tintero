@@ -13,7 +13,7 @@ session_start();
     </head>
     <body>
         <section id="agregar_historia">
-            <h1 id="titulo_pagina">Agregar información de la historia</h1>
+            <h1 id="titulo_pagina">Agregar información de la historia</h1><br>
 
             <div id="contenedor_historia">
 
@@ -68,7 +68,7 @@ session_start();
                     </div>
 
                     <div id="botones_formulario">
-                        <button type="submit" name="guardar_historia" id="boton_guardar">Guardar</button>
+                        <a href="misUniversos.php"><button type="submit" name="guardar_historia" id="boton_guardar">Guardar</button></a>
                         <button type="reset" id="boton_cancelar">Cancelar</button>
                     </div>
 

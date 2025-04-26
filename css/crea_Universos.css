@@ -1,0 +1,136 @@
+/* Reset general */ 
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* fondo base oscuro */
+body {
+    background-color: rgb(42, 27, 48);
+    overflow-x: hidden;
+}
+
+/* Estilo para el contenedor principal de la página */
+#agregar_historia {
+    padding: 20px;
+    color: white;
+}
+
+/* Título de la página */
+#titulo_pagina {
+    text-align: center;
+    font-size: 36px;
+    color: white;
+    text-shadow: 0 0 10px rgb(255, 217, 105),
+                 0 0 20px rgb(255, 217, 105),
+                 0 0 40px rgb(255, 217, 105),
+                 0 0 80px rgb(255, 217, 105);
+}
+
+/* Contenedor del formulario */
+#contenedor_historia {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+}
+
+/* Estilo general para los campos del formulario */
+.campo_formulario {
+    margin-bottom: 15px;
+}
+
+.campo_formulario label {
+    display: block;
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.campo_formulario input,
+.campo_formulario textarea,
+.campo_formulario select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.campo_formulario textarea {
+    resize: vertical;
+}
+
+.campo_formulario input:focus,
+.campo_formulario textarea:focus,
+.campo_formulario select:focus {
+    outline: none;
+    border: 1px solid #7CBBFF; /* Azul suave */
+}
+
+/* Estilo para el contenedor de la portada */
+#portada_historia {
+    margin-bottom: 20px;
+}
+
+#portada_historia label {
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+#portada_historia input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Estilo para los botones */
+#botones_formulario {
+    display: flex;
+    justify-content: space-between;
+}
+
+#boton_guardar,
+#boton_cancelar {
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#boton_guardar {
+    background-color: #7CBBFF;
+    color: white;
+}
+
+#boton_guardar:hover {
+    background-color: #110011;
+}
+
+#boton_cancelar {
+    background-color: #FF5757;
+    color: white;
+}
+
+#boton_cancelar:hover {
+    background-color: #110011;
+}
+
+/* Estilo para la caja de categorías y clasificación */
+#categoria,
+#clasificacion {
+    background-color: #272727;
+    color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+}
