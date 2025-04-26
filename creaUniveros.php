@@ -12,10 +12,115 @@ session_start();
         <script src="./javascript/script.js"></script>
     </head>
     <body>
+        <section id="agregar_historia">
+            <h1 id="titulo_pagina">Agregar información de la historia</h1>
+
+            <div id="contenedor_historia">
+
+                <form id="formulario_historia" method="POST" action="" enctype="multipart/form-data">
+
+                    <div id="portada_historia">
+                        <label for="imagen_portada">Subir portada:</label>
+                        <input type="file" id="imagen_portada" name="imagen_portada" accept="image/*" required>
+                    </div>
+
+                    <div class="campo_formulario">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" required>
+                    </div>
+
+                    <div class="campo_formulario">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+                    </div>
+
+                    <div class="campo_formulario">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria" required>
+                            <option value="">Selecciona una categoría</option>
+                            <?php
+                            // Conexión a la base de datos para cargar las categorías
+                            $conexion = mysqli_connect("localhost", "root", "", "tintero");
+
+                            if (!$conexion->connect_error) {
+                                $resultado = $conexion->query("SELECT ID_Categoria, Nombre FROM categoria");
+
+                                while ($fila = $resultado->fetch_assoc()) {
+                                    echo '<option value="' . $fila['ID_Categoria'] . '">' . htmlspecialchars($fila['Nombre']) . '</option>';
+                                }
+                                $resultado->free();
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="campo_formulario">
+                        <label for="etiquetas">Etiquetas</label>
+                        <input type="text" id="etiquetas" name="etiquetas" placeholder="Agrega etiquetas separadas por coma">
+                    </div>
+
+                    <div class="campo_formulario">
+                        <label for="clasificacion">Clasificación</label>
+                        <select id="clasificacion" name="clasificacion">
+                            <option value="normal">Normal</option>
+                            <option value="madura">Madura</option>
+                        </select>
+                    </div>
+
+                    <div id="botones_formulario">
+                        <button type="submit" name="guardar_historia" id="boton_guardar">Guardar</button>
+                        <button type="reset" id="boton_cancelar">Cancelar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </section>
+
         <?php
-        $conexion = mysqli_connect("localhost", "root", "", "tintero");
-        if (!$conexion) {
-            die("Error de conexión: " . mysqli_connect_error());
+        if (isset($_POST['guardar_historia'])) {
+            // Conexión a la base de datos
+            $conexion = mysqli_connect("localhost", "root", "", "tintero");
+
+            if ($conexion->connect_error) {
+                die('Error de conexión: ' . $conexion->connect_error);
+            }
+
+            $titulo = $_POST['titulo'];
+            $descripcion = $_POST['descripcion'];
+            $id_categoria = $_POST['categoria'];
+
+            $nombreImagen = '';
+            if (isset($_FILES['img_portada']) && $_FILES['img_portada']['error'] === UPLOAD_ERR_OK) {
+                $nombreTemporal = $_FILES['img_portada']['tmp_name'];
+                $nombreOriginal = basename($_FILES['img_portada']['name']);
+                $carpetaDestino = 'img_portada/';
+
+                if (!file_exists($carpetaDestino)) {
+                    mkdir($carpetaDestino, 0777, true);
+                }
+
+                $nombreImagen = uniqid() . '_' . $nombreOriginal;
+                $rutaDestino = $carpetaDestino . $nombreImagen;
+
+                if (!move_uploaded_file($nombreTemporal, $rutaDestino)) {
+                    die('Error al mover la imagen.');
+                }
+            }
+
+            $sql = "INSERT INTO libro_video (Titulo, Descripcion, portada, id_categoria) VALUES (?, ?, ?, ?)";
+
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param('sssi', $titulo, $descripcion, $id_categoria, $nombreImagen);
+
+            if ($stmt->execute()) {
+                echo '<p>Historia guardada correctamente.</p>';
+            } else {
+                echo '<p>Error al guardar: ' . $stmt->error . '</p>';
+            }
+
+            $stmt->close();
+            $conexion->close();
         }
         ?>
     </body>
