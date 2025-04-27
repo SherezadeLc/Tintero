@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["id_usuario"])) {
+/* if (!isset($_SESSION["id_usuario"])) {
     header("Location: login.php");
     exit();
-}
+} */
 
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 
@@ -38,63 +38,21 @@ mysqli_close($conexion);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tintero</title>
     <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-    <style>
-        body {
-            background-color: #121212; /* Fondo oscuro */
-            color: white; /* Texto en blanco */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        form {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255,255,255,0.2);
-            width: 90%;
-            max-width: 600px;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #2c2c2c;
-            color: white;
-            resize: none;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        label {
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./css/Crear_Capitulo.css">
+    
+    <!-- Cargar CKEditor desde el CDN -->
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    
+    <script>
+        
+        // Asegurarse de que CKEditor se inicialice correctamente
+        window.onload = function() {
+            CKEDITOR.replace('contenido_capitulo', {
+                height: 300,  // Ajusta la altura del editor
+                uiColor: '#34214d'  // Cambia el color de la interfaz
+            });
+        };
+    </script>
 </head>
 <body>
 

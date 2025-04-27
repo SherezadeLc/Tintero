@@ -1,0 +1,95 @@
+/* Reset general */
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* fondo base oscuro */
+body {
+    background-color: rgb(42, 27, 48);
+    overflow-x: hidden;
+    color: white;
+}
+
+/* Título principal */
+h1 {
+    margin: 20px auto;
+    font-size: 36px;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 10px rgb(255, 217, 105),
+        0 0 20px rgb(255, 217, 105),
+        0 0 40px rgb(255, 217, 105),
+        0 0 80px rgb(255, 217, 105);
+}
+
+/* Estilo de los formularios */
+form {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo de las etiquetas */
+form label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: block;
+    color: #fff;
+}
+
+/* Estilo de las entradas de texto */
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    font-size: 16px;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+form input[type="submit"] {
+    background-color: #6a3f8b;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #110011;
+}
+
+
+
+/* Estilo de los campos de texto en los formularios */
+input[type="text"], textarea {
+    background-color: #34214d;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type="text"]:focus, textarea:focus {
+    outline: none;
+    background-color: whitesmoke;
+}
+
+/* Estilos adicionales si es necesario */
+
