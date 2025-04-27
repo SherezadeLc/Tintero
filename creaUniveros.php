@@ -85,7 +85,7 @@ session_start();
             if ($conexion->connect_error) {
                 die('Error de conexión: ' . $conexion->connect_error);
             }
-
+            //aqui cogemos la informacion del libro que se esta creando
             $titulo = $_POST['titulo'];
             $descripcion = $_POST['descripcion'];
             $id_categoria = $_POST['categoria'];
@@ -108,19 +108,17 @@ session_start();
                     die('Error al mover la imagen.');
                 }
             }
+            $id_usuario = $_SESSION['id_usuario'];
+            $sql = "INSERT INTO libro_video (Titulo, Descripcion, ID_Autor, portada, id_categoria, Fecha_Publicacion) VALUES ('$titulo', '$descripcion','$id_usuario', '$nombreImagen', '$id_categoria',' $fechaActual')";
 
-            $sql = "INSERT INTO libro_video (Titulo, Descripcion, portada, id_categoria, Fecha_Publicacion) VALUES (?, ?, ?, ?,?)";
-
-            $stmt = $conexion->prepare($sql);
-            $stmt->bind_param('sssi', $titulo, $descripcion, $nombreImagen, $id_categoria);
-
-            if ($stmt->execute()) {
+            if (mysqli_query($conexion, $sql)) {
                 echo '<p>Historia guardada correctamente.</p>';
             } else {
-                echo '<p>Error al guardar: ' . $stmt->error . '</p>';
+                echo '<p>Error al guardar: ' . mysqli_error($conexion) . '</p>';
             }
 
-            $stmt->close();
+
+
             $conexion->close();
         }
         ?>
