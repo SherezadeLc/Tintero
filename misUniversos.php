@@ -96,7 +96,7 @@
             <?php
             if (mysqli_num_rows($resultado) > 0) {
                 while ($historia = mysqli_fetch_assoc($resultado)) {
-                    echo "<a href='leer_libro.php?id=" . urlencode($historia['ID_Contenido']) . "' class='tarjeta-historia'>";
+                    echo "<a href='crearCapitulo.php?id=" . urlencode($historia['ID_Contenido']) . "' class='tarjeta-historia'>";
                     echo "<img src='./portadas/" . htmlspecialchars($historia['portada']) . "' alt='Portada'>";
                     echo "<div class='titulo-historia'>" . htmlspecialchars($historia['Titulo']) . "</div>";
                     echo "</a>";

@@ -109,7 +109,7 @@ mysqli_close($conexion);
         </div>
     </div>
 
-    <a href="lista_capitulos.php">← Volver a la lista de capítulos</a>
+    <a href="">← Volver a la lista de capítulos</a>
 
 </body>
 </html>
