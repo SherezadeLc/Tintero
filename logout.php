@@ -2,7 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Logout</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tintero</title>
+        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
+        <link rel="stylesheet" type="text/css" href="./css/estilo.css">
+        <!--CSS para los brillos del fondo-->
+        <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css">
+        <script src="./javascript/script.js"></script>
+    
         <style>
             /* General */
             body {
