@@ -28,12 +28,13 @@ $id_universo = intval($id_contenido); // ← Ahora bien capturado
 if (isset($_POST['guardar_capitulo'])) {
     $titulo = mysqli_real_escape_string($conexion, $_POST['titulo_capitulo']);
     $contenido = mysqli_real_escape_string($conexion, $_POST['contenido_capitulo']); // Aquí era contenido_capitulo
+    $numero_capitulo = $_POST['numero_capitulo'];
     $id_usuario = $_SESSION['id_usuario']; // Corregido: no ID_Autor, sino id_usuario
     $fecha_publicacion = date("Y-m-d");
 
     // Verifica los nombres de columnas REALES de tu tabla capitulos
-    $sql = "INSERT INTO capitulos (titulo_capitulo, contenido, ID_Contenido)
-            VALUES ('$titulo', '$contenido', '$id_universo')";
+    $sql = "INSERT INTO capitulos (titulo_capitulo,numero_capitulo, contenido, ID_Contenido)
+            VALUES ('$titulo','$numero_capitulo', '$contenido', '$id_universo')";
 
     if (mysqli_query($conexion, $sql)) {
         echo "<p style='color:lightgreen; text-align:center;'>Capítulo guardado correctamente.</p>";
@@ -76,6 +77,10 @@ mysqli_close($conexion);
         <div>
             <label for="titulo_capitulo">Título del capítulo:</label><br>
             <input type="text" id="titulo_capitulo" name="titulo_capitulo" required>
+        </div>
+        <div>
+            <label for="numero_capitulo">Numero del capítulo:</label><br>
+            <input type="text" id="numero_capitulo" name="numero_capitulo" required>
         </div>
 
         <div>
