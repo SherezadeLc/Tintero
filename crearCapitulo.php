@@ -16,12 +16,14 @@ if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
+$id_contenido= $_SESSION['ID_Contenido'];
+
 // Verificar que hemos recibido el ID correcto
-if (!isset($_GET['ID_Contenido'])) {
+if (!isset($id_contenido)) {
     die("Error: No se especificó el libro al que pertenece el capítulo.");
 }
 
-$id_universo = intval($_GET['ID_Contenido']); // ← Ahora bien capturado
+$id_universo = intval($id_contenido); // ← Ahora bien capturado
 
 if (isset($_POST['guardar_capitulo'])) {
     $titulo = mysqli_real_escape_string($conexion, $_POST['titulo_capitulo']);

@@ -100,6 +100,7 @@
                     echo "<img src='./portadas/" . htmlspecialchars($historia['portada']) . "' alt='Portada'>";
                     echo "<div class='titulo-historia'>" . htmlspecialchars($historia['Titulo']) . "</div>";
                     echo "</a>";
+                    $_SESSION['ID_Contenido']=urlencode($historia['ID_Contenido']);
                 }
             } else {
                 echo "<p>No has creado ninguna historia todavía.</p>";
