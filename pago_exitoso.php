@@ -44,6 +44,10 @@
 
             echo "<h2 style='text-align: center; color: green;'>¡Pago simulado realizado con éxito!</h2>";
             echo "<p style='text-align: center;'>Has adquirido el Plan: <strong>$nombre_plan</strong> con modalidad <strong>" . ucfirst($modo) . "</strong> por <strong>$precio €</strong>.</p>";
+        ?>
+        <a href="menuSuscrito.php"><button type="button">Volver</button></a>
+        <?php
+            
         } else {
             echo "<p style='text-align: center; color: red;'>Acceso no válido.</p>";
         }
