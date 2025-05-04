@@ -34,7 +34,7 @@ session_start();
     }
     ?>
     <body>
-        <!-- CONTENEDOR DE LUCES (luciérnagas) -->
+        <!-- CONTENEDOR DE LUCES (luciérnagas). -->
         <div id="estrellas">
             <div class="firefly"></div>
             <div class="firefly"></div>
