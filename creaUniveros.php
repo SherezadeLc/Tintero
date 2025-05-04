@@ -117,7 +117,7 @@ if (isset($_POST['guardar_historia'])) {
 
                 <div id="botones_formulario">
                     <button type="submit" name="guardar_historia" id="boton_guardar">Guardar</button>
-                    <button type="reset" id="boton_cancelar">Cancelar</button>
+                    <a href="menuSuscrito.php"><button type="button" id="boton_cancelar">Cancelar</button></a>
                 </div>
 
             </form>

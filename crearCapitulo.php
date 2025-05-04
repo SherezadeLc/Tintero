@@ -82,6 +82,7 @@ mysqli_close($conexion);
         </div>
 
         <input type="submit" name="guardar_capitulo" value="Guardar Capítulo">
+        <a href="menuSuscrito.php"><button type="button" id="boton_cancelar">Cancelar</button></a>
     </form>
 
 </body>
