@@ -32,6 +32,29 @@ session_start();
             ];
         }
     }
+    $sql = "SELECT ID_Contenido, Titulo, portada FROM libro_video";
+    $resultado = mysqli_query($conexion, $sql);
+    // Obtener la fecha actual y la fecha de hace un mes
+    $fechaActual = date('Y-m-d');
+    $fechaHaceUnMes = date('Y-m-d', strtotime('-1 month'));
+
+    // Consulta para obtener libros publicados en el último mes
+    $consultaFecha = "SELECT Titulo, portada, ID_Contenido FROM libro_video 
+    WHERE Tipo = 'Libro' AND Estado = 'Publicado'AND fecha_publicacion >= '$fechaHaceUnMes'";
+
+// Ejecutar la consulta
+    $resultado = mysqli_query($conexion, $consultaFecha);
+
+    $libros = [];
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $libros[] = [
+                "src" => "./img_portada/" . $fila["portada"],
+                "alt" => "Portada de " . $fila["Titulo"],
+                "id" => $fila["ID_Contenido"]
+            ];
+        }
+    }
     ?>
     <body>
         <!-- CONTENEDOR DE LUCES (luciérnagas). -->
@@ -85,17 +108,25 @@ session_start();
         </div>
 
         <section id="Novedades" class="contenedor-carrusel">
+            <button class="flecha izquierda">&#10094;</button>
             <div class="carrusel">
                 <?php foreach ($libros as $libro): ?>
                     <div class="flip-card">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
-                                <img src="<?php echo $libro['src']; ?>" alt="<?php echo $libro['alt']; ?>" />
+                                <a href="detalle_historia.php?id=<?php echo $libro['id']; ?>">
+                                    <img src="<?php echo $libro['src']; ?>" alt="<?php echo $libro['alt']; ?>" />
+                                </a>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class='titulo-historia'><?php echo htmlspecialchars($libro['alt']); ?> </div>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+            <button class="flecha derecha">&#10095;</button>
         </section>
+
     </body>
 </html>

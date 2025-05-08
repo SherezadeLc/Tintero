@@ -3,44 +3,27 @@
 /*MENU*/
 /*-----------------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
-    const diapositivas = document.querySelector('.carrusel');
-    const imagenes = Array.from(diapositivas.querySelectorAll('img'));
-    const totalDiapositivas = imagenes.length;
-    let index = 0;
+    const carrusel = document.querySelector('.carrusel');
+    const btnIzquierda = document.querySelector('.flecha.izquierda');
+    const btnDerecha = document.querySelector('.flecha.derecha');
 
-    // Configuración del carrusel
-    const imagenesVisibles = 6;
-    let anchoImagen = diapositivas.clientWidth / imagenesVisibles;
-
-    // Función para actualizar el ancho de las imágenes si cambia el tamaño de la ventana
-    const actualizarAnchoImagen = () => {
-        anchoImagen = diapositivas.clientWidth / imagenesVisibles;
-        imagenes.forEach((imagen, i) => {
-            imagen.style.width = `${anchoImagen}px`;
-            imagen.style.left = `${anchoImagen * i}px`;
+    btnIzquierda.addEventListener('click', () => {
+        carrusel.scrollBy({
+            left: -220, // Ancho de una tarjeta + margen
+            behavior: 'smooth'
         });
-        actualizarDiapositiva();
-    };
+    });
 
-    function actualizarDiapositiva() {
-        const offset = -index * anchoImagen;
-        diapositivas.style.transform = `translateX(${offset}px)`;
-    }
+    btnDerecha.addEventListener('click', () => {
+        carrusel.scrollBy({
+            left: 220,
+            behavior: 'smooth'
+        });
+    });
 
-    function siguienteDiapositiva() {
-        index = (index + 1) % totalDiapositivas;
-        actualizarDiapositiva();
-    }
-
-    // Inicializa las diapositivas
-    actualizarAnchoImagen();
-
-    // Actualiza el ancho de las imágenes si cambia el tamaño de la ventana
-    window.addEventListener('resize', actualizarAnchoImagen);
-
-    // Cambiar las imágenes automáticamente cada 5 segundos
-    setInterval(siguienteDiapositiva, 5000);
 });
+
+
 
 
 /*-----------------------------------------------------------------------------*/
