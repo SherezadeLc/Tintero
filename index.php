@@ -97,9 +97,5 @@ session_start();
                 <?php endforeach; ?>
             </div>
         </section>
-
-        <div class="contenedor-h2">
-            <h2 class="colorear">Recomendaciones</h2>
-        </div>
     </body>
 </html>

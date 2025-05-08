@@ -94,7 +94,7 @@ session_start();
                             <div class="flip-card-front">
                                 <img src="<?php echo $libro['src']; ?>" alt="<?php echo $libro['alt']; ?>" />
                             </div>
-                            <div class="contenedor">
+                            <div class="flip-card-back">
 
                             </div>
                         </div>
@@ -110,23 +110,28 @@ session_start();
         <section id="Recomendaciones" class="contenedor-carrusel">
             <div class="carrusel">
                 <?php
-                // Recorremos de nuevo el resultado
-                mysqli_data_seek($resultado, 0); // Reinicia el puntero del resultado
-                while ($fila = mysqli_fetch_assoc($resultado)) {
-                    echo "<div class='flip-card'>";
-                    echo "  <div class='flip-card-inner'>";
-                    echo "      <div class='flip-card-front'>";
-                    echo "          <a href='detalle_historia.php?id=" . $fila['ID_Contenido'] . "'>";
-                    echo "              <img src='./img_portada/" . htmlspecialchars($fila['portada']) . "' alt='Portada'>";
-                    echo "          </a>";
-                    echo "      </div>";
-                    echo "      <div class='titulo-historia'>" . htmlspecialchars($fila['Titulo']) . "</div>";
-                    echo "  </div>";
-                    echo "</div>";
+                // Asegúrate de que el puntero se reinicie si $resultado ya fue usado antes
+                if ($resultado && mysqli_num_rows($resultado) > 0) {
+                    mysqli_data_seek($resultado, 0);
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo "<div class='flip-card'>";
+                        echo "  <div class='flip-card-inner'>";
+                        echo "      <div class='flip-card-front'>";
+                        echo "          <a href='detalle_historia.php?id=" . $fila['ID_Contenido'] . "'>";
+                        echo "              <img src='./img_portada/" . htmlspecialchars($fila['portada']) . "' alt='Portada'>";
+                        echo "          </a>";
+                        echo "      </div>";
+                        echo "      <div class='flip-card-back'>";
+                        echo "          <div class='titulo-historia'>" . htmlspecialchars($fila['Titulo']) . "</div>";
+                        echo "      </div>";
+                        echo "  </div>";
+                        echo "</div>";
+                    }
                 }
                 ?>
             </div>
         </section>
+
 
 
     </body>
