@@ -42,6 +42,8 @@ header .logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    z-index: 1;
 }
 
 header .logo:hover {
@@ -54,6 +56,8 @@ header .logo:hover {
     align-items: center;
     padding: 15px 40px;
     width: 100%;
+    z-index: 10;
+    position: relative;
 }
 
 .nav-left,
