@@ -24,10 +24,14 @@ session_start();
     $fechaActual = date('Y-m-d');
     $fechaHaceUnMes = date('Y-m-d', strtotime('-1 month'));
 
-// Consulta de novedades (último mes)
-    $consultaFecha = "SELECT Titulo, portada, ID_Contenido FROM libro_video 
-    WHERE Tipo = 'Libro' AND Estado = 'Publicado' AND fecha_publicacion >= '$fechaHaceUnMes'";
+// Consulta de novedades
+    $consultaFecha = "SELECT Titulo, portada, ID_Contenido FROM libro 
+    WHERE Estado = 'Publicado' AND Fecha_Publicacion >= '$fechaHaceUnMes'";
     $resultado_novedades = mysqli_query($conexion, $consultaFecha);
+
+    if (!$resultado_novedades) {
+        die("Error en la consulta de novedades: " . mysqli_error($conexion));
+    }
     ?>
     <body>
         <!-- CONTENEDOR DE LUCES (luciérnagas). -->
@@ -59,16 +63,13 @@ session_start();
                     <!-- Enlaces -->
                     <nav class="nav-center">
                         <ul>
-                            <li><a href="#">Categorías</a></li>
-                            <li><a href="#">Biblioteca</a></li>
-                            <li><a href="#">Perfil</a></li>
-                            <li><a href="creaUniveros.php">Crea un nuevo universo</a></li>
-                            <li><a href="misUniversos.php">Mis universos</a></li>
+                            <li><a href="categorias.php">Categorías</a></li>
                             <li><a href="menu_planes_suscripciones.php">Planes suscripción</a></li>
                         </ul>
                     </nav>
                     <!-- Login -->
                     <div class="nav-right">
+                        <a href="#">Perfil</a>
                         <a href="login.php">Iniciar sesión/Registrarse</a>
                     </div>
                 </div></div>
