@@ -65,16 +65,16 @@ session_start();
                 $id_usuario = $datosConsulta['id_usuario'];
 
                 // Consultar la suscripción
-                $consulta_suscripcion = "SELECT id_plan FROM suscripcion WHERE ID_Usuario = '$id_usuario'";
+                $consulta_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE ID_Usuario = '$id_usuario'";
                 $resultadoConsultaSuscripcion = mysqli_query($conexion, $consulta_suscripcion) or die("Fallo en la consulta de suscripción");
-                $datosConsultaId_planSuscripcion = mysqli_fetch_assoc($resultadoConsultaSuscripcion);
+                $datosConsulta_planSuscripcion = mysqli_fetch_assoc($resultadoConsultaSuscripcion);
 
-                if ($datosConsultaId_planSuscripcion) {
+                if ($datosConsulta_planSuscripcion) {
                     // Si existe suscripción
-                    $id_plan_Suscripcion = $datosConsultaId_planSuscripcion['id_plan'];
+                    $id_plan_Suscripcion = $datosConsulta_planSuscripcion['id_plan'];
 
                     // Consultar nombre del plan
-                    $consulta_Plan_suscripcion = "SELECT ID_Plan, Nombre_Plan FROM plan_suscripcion WHERE ID_Plan = '$id_plan_Suscripcion'";
+                    $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM plan_suscripcion WHERE ID_Plan = '$id_plan_Suscripcion'";
                     $resultadoPlanSuscripcion = mysqli_query($conexion, $consulta_Plan_suscripcion) or die("Fallo en la consulta de plan");
                     $datosConsulta_Plan_Suscripcion = mysqli_fetch_assoc($resultadoPlanSuscripcion);
 

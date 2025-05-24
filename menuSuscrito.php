@@ -59,7 +59,7 @@ session_start();
                 <!-- Enlaces -->
                 <nav class="nav-center">
                     <ul>
-                        <li><a href="#">Categorías</a></li>
+                        <li><a href="categorias.php">Categorías</a></li>
                         <li><a href="#">Biblioteca</a></li>
                         <li><a href="#">Perfil</a></li>
                         <li><a href="creaUniveros.php">Crea un nuevo universo</a></li>
