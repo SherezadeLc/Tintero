@@ -1,4 +1,5 @@
 <?php 
+//fjsdn
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
