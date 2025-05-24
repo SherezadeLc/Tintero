@@ -71,27 +71,25 @@ session_start();
 
                 if ($datosConsulta_planSuscripcion) {
                     // Si existe suscripción
-                    $id_plan_Suscripcion = $datosConsulta_planSuscripcion['id_plan'];
+                    $Nombre_Plan = $datosConsulta_planSuscripcion['Nombre_Plan'];
 
                     // Consultar nombre del plan
-                    $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM plan_suscripcion WHERE ID_Plan = '$id_plan_Suscripcion'";
+                    $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM plan_suscripcion WHERE Nombre_Plan = '$Nombre_Plan'";
                     $resultadoPlanSuscripcion = mysqli_query($conexion, $consulta_Plan_suscripcion) or die("Fallo en la consulta de plan");
                     $datosConsulta_Plan_Suscripcion = mysqli_fetch_assoc($resultadoPlanSuscripcion);
 
                     // Iniciar sesión
                     $_SESSION['usuario'] = $usuario_ingresado;
-                    $_SESSION['nombreUsuario'] = $datosConsulta['nombre'];
-                    $_SESSION['id_usuario'] = $datosConsulta['id_usuario'];
-                    $_SESSION['plan_suscripcion'] = $datosConsulta_Plan_Suscripcion['Nombre_Plan'];
+                    $_SESSION['Nombre_Plan'] = $datosConsulta_Plan_Suscripcion['Nombre_Plan'];
 
                     // Redireccionar según el plan
-                    if ($_SESSION['plan_suscripcion'] == 'Plan_Basico') {
+                    if ($_SESSION['Nombre_Plan'] == 'Plan_Basico') {
                         header('Location: menuSuscrito.php');
                         exit;
-                    } elseif ($_SESSION['plan_suscripcion'] == 'Plan_Estandar') {
+                    } elseif ($_SESSION['Nombre_Plan'] == 'Plan_Estandar') {
                         header('Location: menuSuscrito.php');
                         exit;
-                    } elseif ($_SESSION['plan_suscripcion'] == 'Plan_Premium' || $_SESSION['plan_suscripcion'] == 'Mes_prueba') {
+                    } elseif ($_SESSION['Nombre_Plan'] == 'Plan_Premium' || $_SESSION['Nombre_Plan'] == 'Mes_prueba') {
                         header('Location: menuSuscrito.php');
                         exit;
                     }
