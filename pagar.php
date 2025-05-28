@@ -1,90 +1,83 @@
 <?php
 session_start();
+?>
+<?php
+// Obtener plan y modo de pago desde GET
+$plan = $_GET['plan'] ?? '';
+$modo = $_GET['modo'] ?? '';
 
-if (!isset($_GET['plan']) || !isset($_GET['modo'])) {
-    echo "No se han recibido datos de pago.";
+// Definir los planes manualmente
+$planes = [
+    'basico' => [
+        'nombre' => 'Plan Básico',
+        'beneficios' => 'Acceso a la plataforma y funciones básicas de creación y publicación de historias. Herramientas de edición y formateo de texto básicas. Posibilidad de compartir contenido con otros usuarios. Acceso limitado a plantillas y funciones de diseño.',
+        'precio_mensual' => 0,
+        'precio_anual' => 0,
+        'duracion_mensual' => '6',
+        'duracion_anual' => '12',
+    ],
+    'estandar' => [
+        'nombre' => 'Plan Estándar',
+        'beneficios' => 'Todo lo incluido en el Plan Básico. Acceso a un conjunto más amplio de herramientas de creación y edición. Posibilidad de personalizar plantillas y diseños. Analíticas básicas sobre el rendimiento de las publicaciones.',
+        'precio_mensual' => 28.99,
+        'precio_anual' => 30.99,
+        'duracion_mensual' => '6',
+        'duracion_anual' => '12',
+    ],
+    'premium' => [
+        'nombre' => 'Plan Premium',
+        'beneficios' => 'Todo lo incluido en el Plan Estándar. Acceso a herramientas avanzadas de creación de contenido visual. Plantillas personalizadas y exclusivas. Funcionalidades adicionales para mejorar la visibilidad y promoción del contenido. Analíticas detalladas sobre el rendimiento y compromiso de las publicaciones. Acceso prioritario a soporte y asistencia.',
+        'precio_mensual' => 48.99,
+        'precio_anual' => 60.99,
+        'duracion_mensual' => '6',
+        'duracion_anual' => '12',
+    ],
+    'mes_prueba' => [
+        'nombre' => 'Mes Prueba',
+        'beneficios' => 'Todo lo incluido en el Plan Estándar. Acceso a herramientas avanzadas de creación de contenido visual. Plantillas personalizadas y exclusivas. Funcionalidades adicionales para mejorar la visibilidad y promoción del contenido. Analíticas detalladas sobre el rendimiento y compromiso de las publicaciones. Acceso prioritario a soporte y asistencia.',
+        'precio_mensual' => 0,
+        'precio_anual' => 0,
+        'duracion_mensual' => '1',
+        'duracion_anual' => '-',
+    ]
+];
+
+// Validar el plan
+if (!isset($planes[$plan])) {
+    echo "Plan no válido.";
     exit;
 }
 
-$plan_id = $_GET['plan'];
-$modo_pago = $_GET['modo'];
+// Obtener datos del plan
+$datosPlan = $planes[$plan];
+$precio = $modo === 'mensual' ? $datosPlan['precio_mensual'] : $datosPlan['precio_anual'];
+$duracion = $modo === 'mensual' ? $datosPlan['duracion_mensual'] : $datosPlan['duracion_anual'];
 
-// Conexión a la base de datos
-$conexion = mysqli_connect("localhost", "root", "", "tintero");
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
-
-// Obtener los datos del plan
-$sql = "SELECT Nombre_Plan, Precio_Mensual, Precio_Anual FROM plan_suscripcion WHERE id_plan = $plan_id";
-$resultado = mysqli_query($conexion, $sql);
-$plan = mysqli_fetch_assoc($resultado);
-
-// Determinar el precio según el modo
-$precio = $modo_pago === "mensual" ? $plan["Precio_Mensual"] : $plan["Precio_Anual"];
-$nombre_plan = $plan["Nombre_Plan"];
-
-mysqli_close($conexion);
+// Guardar en sesión
+$_SESSION['plan_seleccionado'] = [
+    'nombre_plan' => $datosPlan['nombre'],
+    'beneficios' => $datosPlan['beneficios'],
+    'precio' => $precio,
+    'modo_pago' => $modo,
+    'duracion' => $duracion
+];
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
-        <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tintero</title>
-        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-        <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
-        <script src="./javascript/script.js"></script>
+        <title>Confirmación de Pago</title>
     </head>
-        <style>
-            body {
-                background-color: #2a1f36;
-                color: white;
-                font-family: Arial, sans-serif;
-                text-align: center;
-                padding-top: 50px;
-            }
-            .resumen {
-                background-color: #3a2d4d;
-                padding: 20px;
-                border-radius: 10px;
-                display: inline-block;
-            }
-            .btn {
-                padding: 10px 20px;
-                background-color: #28a745;
-                border: none;
-                color: white;
-                border-radius: 5px;
-                margin-top: 20px;
-                text-decoration: none;
-            }
-            .btn:hover {
-                background-color: #218838;
-            }
-        </style>
-    </head>
-    <body>
+    <body style="background-color:#2a1f36; color:white; font-family: Arial; padding: 20px;">
+        <h2>Resumen del Plan Seleccionado</h2>
+        <p><strong>Nombre del Plan:</strong> <?= $_SESSION['plan_seleccionado']['nombre_plan'] ?></p>
+        <p><strong>Modo de Pago:</strong> <?= ucfirst($_SESSION['plan_seleccionado']['modo_pago']) ?></p>
+        <p><strong>Duración:</strong> <?= $_SESSION['plan_seleccionado']['duracion'] ?> meses.</p>
+        <p><strong>Precio:</strong> <?= $_SESSION['plan_seleccionado']['precio'] ?> €</p>
+        <p><strong>Beneficios Incluidos:</strong><br><?= $_SESSION['plan_seleccionado']['beneficios'] ?></p>
 
-        <div class="resumen">
-            <h2>Resumen del Pago</h2>
-            <p><strong>Plan Seleccionado:</strong> <?= $nombre_plan ?></p>
-            <p><strong>Modalidad:</strong> <?= ucfirst($modo_pago) ?></p>
-            <p><strong>Precio:</strong> <?= $precio ?> €</p>
-
-            <!-- Aquí podrías redirigir a un procesador de pago real -->
-            <form action="pago_exitoso.php" method="POST">
-
-                <input type="hidden" name="plan_id" value="<?= $plan_id ?>">
-                <input type="hidden" name="nombre_plan" value="<?= htmlspecialchars($nombre_plan) ?>">
-                <input type="hidden" name="modo" value="<?= $modo_pago ?>">
-                <input type="hidden" name="precio" value="<?= $precio ?>">
-                <button class="btn" type="submit">Proceder al Pago</button>
-
-            </form>
-        </div>
-
+        <form method="post" action="pago_exitoso.php">
+            <input type="submit" value="Confirmar Pago" class="btn">
+        </form>
     </body>
 </html>

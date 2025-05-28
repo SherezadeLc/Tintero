@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+?>
+<?php
 // Conexión a la base de datos
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 
@@ -16,8 +17,9 @@ if (!isset($_GET['id'])) {
 
 $id_capitulo = intval($_GET['id']);
 
+$id_contenidos =$_SESSION['ID_Contenido'];
 // Obtener el capítulo
-$sql = "SELECT titulo, contenido, fecha_publicacion FROM capitulos WHERE id = $id_capitulo";
+$sql = "SELECT titulo, contenido, fecha_publicacion FROM capitulos WHERE id_contenido = $id_contenidos";
 $resultado = mysqli_query($conexion, $sql);
 
 if (mysqli_num_rows($resultado) == 0) {

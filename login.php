@@ -57,13 +57,14 @@ session_start();
 
             // Consulta para verificar usuario y contraseña
             $consulta = "SELECT nombre, id_usuario FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
+
             $resultado = mysqli_query($conexion, $consulta) or die("Fallo en la consulta");
             $datosConsulta = mysqli_fetch_assoc($resultado);
 
             if ($datosConsulta) {
                 // Usuario encontrado, obtener id_usuario
                 $id_usuario = $datosConsulta['id_usuario'];
-
+                $_SESSION["id_usuario"] = $id_usuario;
                 // Consultar la suscripción
                 $consulta_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE ID_Usuario = '$id_usuario'";
                 $resultadoConsultaSuscripcion = mysqli_query($conexion, $consulta_suscripcion) or die("Fallo en la consulta de suscripción");
@@ -74,7 +75,7 @@ session_start();
                     $Nombre_Plan = $datosConsulta_planSuscripcion['Nombre_Plan'];
 
                     // Consultar nombre del plan
-                    $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM plan_suscripcion WHERE Nombre_Plan = '$Nombre_Plan'";
+                    $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE Nombre_Plan = '$Nombre_Plan'";
                     $resultadoPlanSuscripcion = mysqli_query($conexion, $consulta_Plan_suscripcion) or die("Fallo en la consulta de plan");
                     $datosConsulta_Plan_Suscripcion = mysqli_fetch_assoc($resultadoPlanSuscripcion);
 
@@ -89,7 +90,7 @@ session_start();
                     } elseif ($_SESSION['Nombre_Plan'] == 'Plan_Estandar') {
                         header('Location: menuSuscrito.php');
                         exit;
-                    } elseif ($_SESSION['Nombre_Plan'] == 'Plan_Premium' || $_SESSION['Nombre_Plan'] == 'Mes_prueba') {
+                    } elseif ($_SESSION['Nombre_Plan'] == 'Plan Premium') {
                         header('Location: menuSuscrito.php');
                         exit;
                     }

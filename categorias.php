@@ -1,12 +1,10 @@
-<?php 
-//fjsdn
+<?php  
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
-
     if ($_POST['accion'] === 'cargar_categorias') {
         $resultado = mysqli_query($conexion, "SELECT * FROM categoria");
 
@@ -26,18 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
         if (mysqli_num_rows($resultado) > 0) {
             echo '<div class="grid-libros">';
             while ($libro = mysqli_fetch_assoc($resultado)) {
-                echo "<div class='flip-card'>";
-                echo "  <div class='flip-card-inner'>";
+                echo "<a href='opciones_lectura.php?id=" . urlencode($libro['ID_Contenido']) . "' style='text-decoration: none; color: inherit;'>";
+                echo "  <div class='flip-card'>";
+                echo "    <div class='flip-card-inner'>";
                 echo "      <div class='flip-card-front'>";
-                echo "          <a href='detalle_historia.php?id=" . $libro['ID_Contenido'] . "'>";
-                echo "              <img src='./img_portada/" . htmlspecialchars($libro['portada']) . "' alt='Portada de " . htmlspecialchars($libro['Titulo']) . "'>";
-                echo "          </a>";
+                echo "        <img src='./img_portada/" . htmlspecialchars($libro['portada']) . "' alt='Portada de " . htmlspecialchars($libro['Titulo']) . "'>";
                 echo "      </div>";
                 echo "      <div class='flip-card-back'>";
-                echo "          <div class='titulo-historia'>" . htmlspecialchars($libro['Titulo']) . "</div>";
+                echo "        <div class='titulo-historia'>" . htmlspecialchars($libro['Titulo']) . "</div>";
                 echo "      </div>";
+                echo "    </div>";
                 echo "  </div>";
-                echo "</div>";
+                echo "</a>";
             }
             echo '</div>';
         } else {
@@ -47,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -132,7 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
     <div id="resultado"></div>
 
     <script>
-        // Cargar categorías al entrar
         window.addEventListener('load', () => {
             cargarCategorias();
         });

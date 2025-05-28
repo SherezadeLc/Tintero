@@ -86,7 +86,7 @@
             die("Error de conexión: " . mysqli_connect_error());
         }
 
-        $sql = "SELECT ID_Contenido, Titulo, portada FROM libro_video WHERE ID_Autor = '$id_usuario'";
+        $sql = "SELECT ID_Contenido, Titulo, portada FROM libro WHERE ID_Autor = '$id_usuario'";
         $resultado = mysqli_query($conexion, $sql);
         ?>
 
@@ -96,6 +96,7 @@
             <?php
             if (mysqli_num_rows($resultado) > 0) {
                 while ($historia = mysqli_fetch_assoc($resultado)) {
+                    
                     echo "<a href='crearCapitulo.php?id=" . urlencode($historia['ID_Contenido']) . "' class='tarjeta-historia'>";
                     echo "<img src='./portadas/" . htmlspecialchars($historia['portada']) . "' alt='Portada'>";
                     echo "<div class='titulo-historia'>" . htmlspecialchars($historia['Titulo']) . "</div>";
