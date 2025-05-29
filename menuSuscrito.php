@@ -60,7 +60,7 @@ session_start();
                 <nav class="nav-center">
                     <ul>
                         <li><a href="categorias.php">Categorías</a></li>
-                        <li><a href="#">Biblioteca</a></li>
+                        <li><a href="mis_favoritos.php">Biblioteca</a></li>
                         <li><a href="perfil.php">Perfil</a></li>
                         <li><a href="creaUniveros.php">Crea un nuevo universo</a></li>
                         <li><a href="misUniversos.php">Mis universos</a></li>

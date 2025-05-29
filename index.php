@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-session_start();
+    session_start();
 ?>
 <html lang="es">
     <head>
@@ -14,24 +14,26 @@ session_start();
         <script src="./javascript/script.js"></script>
     </head>
     <?php
-    // Conexión a la base de datos
-    $conexion = mysqli_connect("localhost", "root", "", "tintero");
-    if (!$conexion) {
-        die("Error de conexión: " . mysqli_connect_error());
-    }
+        // Conexión a la base de datos
+        $conexion = mysqli_connect("localhost", "root", "", "tintero");
+        if (!$conexion) 
+        {
+            die("Error de conexión: " . mysqli_connect_error());
+        }
 
-// Fechas para novedades
-    $fechaActual = date('Y-m-d');
-    $fechaHaceUnMes = date('Y-m-d', strtotime('-1 month'));
+    // Fechas para novedades
+        $fechaActual = date('Y-m-d');
+        $fechaHaceUnMes = date('Y-m-d', strtotime('-1 month'));
 
-// Consulta de novedades
-    $consultaFecha = "SELECT Titulo, portada, ID_Contenido FROM libro 
-    WHERE Estado = 'Publicado' AND Fecha_Publicacion >= '$fechaHaceUnMes'";
-    $resultado_novedades = mysqli_query($conexion, $consultaFecha);
+    // Consulta de novedades
+        $consultaFecha = "SELECT Titulo, portada, ID_Contenido FROM libro 
+        WHERE Estado = 'Publicado' AND Fecha_Publicacion >= '$fechaHaceUnMes'";
+        $resultado_novedades = mysqli_query($conexion, $consultaFecha);
 
-    if (!$resultado_novedades) {
-        die("Error en la consulta de novedades: " . mysqli_error($conexion));
-    }
+        if (!$resultado_novedades) 
+        {
+            die("Error en la consulta de novedades: " . mysqli_error($conexion));
+        }
     ?>
     <body>
         <!-- CONTENEDOR DE LUCES (luciérnagas). -->
@@ -86,22 +88,24 @@ session_start();
                 <button class="flecha" id="izquierda">&#10094;</button>
                 <div class="carrusel">
                     <?php
-                    if ($resultado_novedades && mysqli_num_rows($resultado_novedades) > 0) {
-                        while ($fila = mysqli_fetch_assoc($resultado_novedades)) {
-                            echo "<div class='flip-card'>";
-                            echo "  <div class='flip-card-inner'>";
-                            echo "      <div class='flip-card-front'>";
-                            echo "          <a href='detalle_historia.php?id=" . $fila['ID_Contenido'] . "'>";
-                            echo "              <img src='./img_portada/" . htmlspecialchars($fila['portada']) . "' alt='Portada de " . htmlspecialchars($fila['Titulo']) . "'>";
-                            echo "          </a>";
-                            echo "      </div>";
-                            echo "      <div class='flip-card-back'>";
-                            echo "          <div class='titulo-historia'>" . htmlspecialchars($fila['Titulo']) . "</div>";
-                            echo "      </div>";
-                            echo "  </div>";
-                            echo "</div>";
+                        if ($resultado_novedades && mysqli_num_rows($resultado_novedades) > 0) 
+                        {
+                            while ($fila = mysqli_fetch_assoc($resultado_novedades)) 
+                            {
+                                echo "<div class='flip-card'>";
+                                echo "  <div class='flip-card-inner'>";
+                                echo "      <div class='flip-card-front'>";
+                                echo "          <a href='detalle_historia.php?id=" . $fila['ID_Contenido'] . "'>";
+                                echo "              <img src='./img_portada/" . htmlspecialchars($fila['portada']) . "' alt='Portada de " . htmlspecialchars($fila['Titulo']) . "'>";
+                                echo "          </a>";
+                                echo "      </div>";
+                                echo "      <div class='flip-card-back'>";
+                                echo "          <div class='titulo-historia'>" . htmlspecialchars($fila['Titulo']) . "</div>";
+                                echo "      </div>";
+                                echo "  </div>";
+                                echo "</div>";
+                            }
                         }
-                    }
                     ?>
                 </div>
                 <button class="flecha" id="derecha">&#10095;</button>

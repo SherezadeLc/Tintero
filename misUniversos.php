@@ -1,115 +1,167 @@
+<?php
+session_start();
+
+$id_usuario = $_SESSION['id_usuario'];
+$conexion = mysqli_connect("localhost", "root", "", "tintero");
+
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
+
+// Actualizar estado si se envió un formulario
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_contenido'], $_POST['accion'])) {
+    $id_contenido = intval($_POST['id_contenido']);
+    $accion = $_POST['accion'];
+
+    if ($accion === 'publicar') {
+        $estado = 'Publicado';
+    } elseif ($accion === 'borrador') {
+        $estado = 'Borrador';
+    }
+
+    $update = "UPDATE libro SET Estado = '$estado' WHERE ID_Contenido = $id_contenido AND ID_Autor = $id_usuario";
+    mysqli_query($conexion, $update);
+}
+
+// Obtener historias del usuario
+$sql = "SELECT ID_Contenido, Titulo, portada, Estado FROM libro WHERE ID_Autor = '$id_usuario'";
+$resultado = mysqli_query($conexion, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mis Historias | Tintero</title>
-        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-        <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
-        <style>
-            h1 {
-                text-align: center;
-                margin-top: 50px;
-                font-size: 40px;
-                color: white;
-                text-shadow: 0 0 10px rgb(255, 217, 105),
-                    0 0 20px rgb(255, 217, 105),
-                    0 0 40px rgb(255, 217, 105),
-                    0 0 80px rgb(255, 217, 105);
-            }
-
-            .contenedor-historias {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 30px;
-                margin: 50px auto;
-                padding: 0 40px;
-                max-width: 1200px;
-            }
-
-            .tarjeta-historia {
-                background-color: #1e1e1e;
-                border-radius: 15px;
-                overflow: hidden;
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-                width: 200px;
-                transition: transform 0.3s, box-shadow 0.3s;
-                cursor: pointer;
-                text-decoration: none; /* Para quitar el subrayado al enlace */
-            }
-
-            .tarjeta-historia:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 20px rgba(255, 217, 105, 0.8);
-            }
-
-            .tarjeta-historia img {
-                width: 100%;
-                height: 300px;
-                object-fit: cover;
-            }
-
-            .titulo-historia {
-                text-align: center;
-                font-size: 18px;
-                padding: 15px 10px;
-                color: white;
-                font-weight: bold;
-                background-color: #2c2c2c;
-            }
-
-            p {
-                color: white;
-                text-align: center;
-                font-size: 20px;
-                margin-top: 50px;
-            }
-        </style>
-        <script src="./javascript/script.js"></script>
-    </head>
-    <body>
-
-        <?php
-        session_start();
-
-        if (!isset($_SESSION["id_usuario"])) {
-            header("Location: login.php");
-            exit();
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Historias | Tintero</title>
+    <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
+    <style>
+        body {
+            background-color: #2a1f36;
+            color: white;
+            font-family: Arial, sans-serif;
         }
-
-        $id_usuario = $_SESSION['id_usuario'];
-
-        $conexion = mysqli_connect("localhost", "root", "", "tintero");
-
-        if (!$conexion) {
-            die("Error de conexión: " . mysqli_connect_error());
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 40px;
+            text-shadow: 0 0 10px rgb(255, 217, 105),
+                         0 0 20px rgb(255, 217, 105),
+                         0 0 40px rgb(255, 217, 105),
+                         0 0 80px rgb(255, 217, 105);
         }
+        .contenedor-historias {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px auto;
+            padding: 0 40px;
+            max-width: 1200px;
+        }
+        .tarjeta-historia {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            width: 200px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .tarjeta-historia:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 217, 105, 0.8);
+        }
+        .tarjeta-historia img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .titulo-historia {
+            font-size: 18px;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        form {
+            margin-top: 10px;
+        }
+        .btn {
+            padding: 6px 12px;
+            margin: 4px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-publicar {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-publicar:hover {
+            background-color: #218838;
+        }
+        .btn-borrador {
+            background-color: #ffc107;
+            color: black;
+        }
+        .btn-borrador:hover {
+            background-color: #e0a800;
+        }
+        .estado {
+            font-size: 14px;
+            color: #ccc;
+        }
+        .btn-volver {
+            display: block;
+            margin: 40px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn-volver:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
 
-        $sql = "SELECT ID_Contenido, Titulo, portada FROM libro WHERE ID_Autor = '$id_usuario'";
-        $resultado = mysqli_query($conexion, $sql);
-        ?>
+    <h1>Mis Historias</h1>
 
-        <h1>Mis Historias</h1>
+    <div class="contenedor-historias">
+        <?php if (mysqli_num_rows($resultado) > 0): ?>
+            <?php while ($historia = mysqli_fetch_assoc($resultado)): ?>
+                <div class="tarjeta-historia">
+                    <a href="crearCapitulo.php?id=<?= urlencode($historia['ID_Contenido']) ?>">
+                        <img src="./portadas/<?= htmlspecialchars($historia['portada']) ?>" alt="Portada">
+                    </a>
+                    <div class="titulo-historia"><?= htmlspecialchars($historia['Titulo']) ?></div>
+                    <div class="estado">(Estado: <?= htmlspecialchars($historia['Estado']) ?>)</div>
+                    <form method="POST" action="">
+                        <input type="hidden" name="id_contenido" value="<?= $historia['ID_Contenido'] ?>">
+                        <button type="submit" name="accion" value="publicar" class="btn btn-publicar">Publicar</button>
+                        <button type="submit" name="accion" value="borrador" class="btn btn-borrador">Borrador</button>
+                    </form>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p style="text-align:center;">No has creado ninguna historia todavía.</p>
+        <?php endif; ?>
+    </div>
 
-        <div class="contenedor-historias">
-            <?php
-            if (mysqli_num_rows($resultado) > 0) {
-                while ($historia = mysqli_fetch_assoc($resultado)) {
-                    
-                    echo "<a href='crearCapitulo.php?id=" . urlencode($historia['ID_Contenido']) . "' class='tarjeta-historia'>";
-                    echo "<img src='./portadas/" . htmlspecialchars($historia['portada']) . "' alt='Portada'>";
-                    echo "<div class='titulo-historia'>" . htmlspecialchars($historia['Titulo']) . "</div>";
-                    echo "</a>";
-                    $_SESSION['ID_Contenido']=urlencode($historia['ID_Contenido']);
-                }
-            } else {
-                echo "<p>No has creado ninguna historia todavía.</p>";
-            }
+    <!-- Botón Volver al Menú -->
+    <div>
+        <a href="menuSuscrito.php" class="btn-volver">Volver al Menú</a>
+    </div>
 
-            mysqli_close($conexion);
-            ?>
-        </div>
-
-    </body>
+</body>
 </html>
+
+<?php mysqli_close($conexion); ?>

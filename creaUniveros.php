@@ -1,56 +1,63 @@
 <?php
-session_start();
+    session_start();
 
-// Procesar guardado antes de enviar NADA al navegador
-if (isset($_POST['guardar_historia'])) {
-    $conexion = mysqli_connect("localhost", "root", "", "tintero");
+    // Procesar guardado antes de enviar NADA al navegador
+    if (isset($_POST['guardar_historia'])) 
+    {
+        $conexion = mysqli_connect("localhost", "root", "", "tintero");
 
-    if ($conexion->connect_error) {
-        die('Error de conexión: ' . $conexion->connect_error);
-    }
-
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
-    $id_categoria = $_POST['categoria'];
-    $fechaActual = date("Y-m-d");
-
-    $nombreImagen = '';
-    if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) {
-        $nombreTemporal = $_FILES['imagen_portada']['tmp_name'];
-        $nombreOriginal = basename($_FILES['imagen_portada']['name']);
-        $carpetaDestino = 'img_portada/';
-
-        if (!file_exists($carpetaDestino)) {
-            mkdir($carpetaDestino, 0777, true);
+        if ($conexion->connect_error) 
+        {
+            die('Error de conexión: ' . $conexion->connect_error);
         }
 
-        $nombreImagen = uniqid() . '_' . $nombreOriginal;
-        $rutaDestino = $carpetaDestino . $nombreImagen;
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $id_categoria = $_POST['categoria'];
+        $fechaActual = date("Y-m-d");
 
-        if (!move_uploaded_file($nombreTemporal, $rutaDestino)) {
-            die('Error al mover la imagen.');
+        $nombreImagen = '';
+        if (isset($_FILES['imagen_portada']) && $_FILES['imagen_portada']['error'] === UPLOAD_ERR_OK) 
+        {
+            $nombreTemporal = $_FILES['imagen_portada']['tmp_name'];
+            $nombreOriginal = basename($_FILES['imagen_portada']['name']);
+            $carpetaDestino = 'img_portada/';
+
+            if (!file_exists($carpetaDestino)) 
+            {
+                mkdir($carpetaDestino, 0777, true);
+            }
+
+            $nombreImagen = uniqid() . '_' . $nombreOriginal;
+            $rutaDestino = $carpetaDestino . $nombreImagen;
+
+            if (!move_uploaded_file($nombreTemporal, $rutaDestino)) 
+            {
+                die('Error al mover la imagen.');
+            }
         }
+
+        $id_usuario = $_SESSION['id_usuario'];
+
+        $sql = "INSERT INTO libro (Titulo, Descripcion, ID_Autor, portada, id_categoria, Fecha_Publicacion,Estado) 
+        VALUES ('$titulo', '$descripcion','$id_usuario', '$nombreImagen', '$id_categoria', '$fechaActual','Borrador')";
+
+        if (mysqli_query($conexion, $sql)) 
+        {
+            $id_universo = mysqli_insert_id($conexion);
+            $consulta_id_contenido = "SELECT ID_Contenido FROM libro WHERE Titulo = '$titulo'";
+            $consulta_id_contenidos = mysqli_query($conexion, $consulta_id_contenido) or die("Fallo en la consulta de seleccionar el id contenido");
+
+            $_SESSION['ID_Contenido'] = $consulta_id_contenidos;
+            header('Location: crearCapitulo.php?ID_Contenido=' . $id_universo);
+            exit();
+        } else 
+        {
+            die('Error al guardar: ' . mysqli_error($conexion));
+        }
+
+        $conexion->close();
     }
-
-    $id_usuario = $_SESSION['id_usuario'];
-
-    $sql = "INSERT INTO libro (Titulo, Descripcion, ID_Autor, portada, id_categoria, Fecha_Publicacion) 
-    VALUES ('$titulo', '$descripcion','$id_usuario', '$nombreImagen', '$id_categoria', '$fechaActual')";
-
-    if (mysqli_query($conexion, $sql)) {
-        $id_universo = mysqli_insert_id($conexion);
-        $consulta_id_contenido = "SELECT ID_Contenido FROM libro WHERE Titulo = '$titulo'";
-        $consulta_id_contenidos = mysqli_query($conexion, $consulta_id_contenido) or die("Fallo en la consulta de seleccionar el id contenido");
-
-        $_SESSION['ID_Contenido'] = $consulta_id_contenidos;
-        header('Location: crearCapitulo.php?ID_Contenido=' . $id_universo);
-        exit();
-    } else {
-        die('Error al guardar: ' . mysqli_error($conexion));
-    }
-
-    $conexion->close();
-}
 ?>
 
 <!DOCTYPE html>
@@ -93,10 +100,12 @@ if (isset($_POST['guardar_historia'])) {
                             // Conexión a la base de datos para cargar las categorías
                             $conexion = mysqli_connect("localhost", "root", "", "tintero");
 
-                            if (!$conexion->connect_error) {
+                            if (!$conexion->connect_error) 
+                            {
                                 $resultado = $conexion->query("SELECT ID_Categoria, Nombre FROM categoria");
 
-                                while ($fila = $resultado->fetch_assoc()) {
+                                while ($fila = $resultado->fetch_assoc()) 
+                                {
                                     echo '<option value="' . $fila['ID_Categoria'] . '">' . htmlspecialchars($fila['Nombre']) . '</option>';
                                 }
                                 $resultado->free();

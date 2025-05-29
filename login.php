@@ -73,7 +73,7 @@ session_start();
                 if ($datosConsulta_planSuscripcion) {
                     // Si existe suscripción
                     $Nombre_Plan = $datosConsulta_planSuscripcion['Nombre_Plan'];
-
+                    $_SESSION["Nombre_plan"] = $Nombre_Plan;
                     // Consultar nombre del plan
                     $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE Nombre_Plan = '$Nombre_Plan'";
                     $resultadoPlanSuscripcion = mysqli_query($conexion, $consulta_Plan_suscripcion) or die("Fallo en la consulta de plan");

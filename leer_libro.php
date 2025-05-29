@@ -1,117 +1,107 @@
 <?php
 session_start();
-?>
-<?php
+
+// Verificación de sesión
+if (!isset($_SESSION["id_usuario"]) || !isset($_SESSION["Nombre_plan"])) {
+    die("Acceso denegado. Debes estar logueado.");
+}
+
+$plan = $_SESSION["Nombre_plan"];
+$id_usuario = $_SESSION['id_usuario'];
+
+// Verifica que el ID del libro esté presente
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("ID de libro no válido.");
+}
+
+$id_contenido = intval($_GET['id']);
+
 // Conexión a la base de datos
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
-
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Verificar que enviaron un ID de capítulo
-if (!isset($_GET['id'])) {
-    echo "Capítulo no encontrado.";
-    exit();
-}
-
-$id_capitulo = intval($_GET['id']);
-
-$id_contenidos =$_SESSION['ID_Contenido'];
-// Obtener el capítulo
-$sql = "SELECT titulo, contenido, fecha_publicacion FROM capitulos WHERE id_contenido = $id_contenidos";
+// Obtener información del libro
+$sql = "SELECT Titulo, Descripcion, portada FROM libro WHERE ID_Contenido = $id_contenido";
 $resultado = mysqli_query($conexion, $sql);
 
 if (mysqli_num_rows($resultado) == 0) {
-    echo "Capítulo no encontrado.";
+    die("Libro no encontrado.");
+}
+
+$libro = mysqli_fetch_assoc($resultado);
+
+// Validar permiso según el plan
+$permitido = false;
+if ($plan === 'Plan Premium' || $plan === 'Plan Estandar' || $plan === 'Mes prueba') {
+    $permitido = true;
+} elseif ($plan === 'Plan_Basico' && $libro['visible_basico'] == 1) {
+    $permitido = true;
+}
+
+if (!$permitido) {
+    echo "<p style='color:red; text-align:center;'>Tu plan actual no permite acceder a este libro completo.</p>";
+    echo "<p style='text-align:center;'><a href='menu_planes_suscripciones.php'>Mejorar suscripción</a></p>";
     exit();
 }
 
-$capitulo = mysqli_fetch_assoc($resultado);
-
-mysqli_close($conexion);
+// Obtener capítulos
+$sql_capitulos = "SELECT numero_capitulo, titulo_capitulo, contenido FROM capitulos WHERE ID_Contenido = $id_contenido ORDER BY numero_capitulo ASC";
+$capitulos = mysqli_query($conexion, $sql_capitulos);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
+    <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tintero</title>
-        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-        <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
-        <script src="./javascript/script.js"></script>
-    
-    <style>
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px;
-            min-height: 100vh;
-            margin: 0;
+        <title><?= htmlspecialchars($libro['Titulo']) ?> - Tintero</title>
+        <style>
+            body {
+                background-color: #2a1f36;
+                color: white;
+                font-family: Arial, sans-serif;
+                padding: 40px;
+            }
+            .portada {
+                width: 200px;
+                height: 300px;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+            .capitulo {
+                margin-bottom: 40px;
+            }
+            h1, h2 {
+                color: #ffd769;
+            }
+            .descripcion {
+                font-style: italic;
+                color: #ccc;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1><?= htmlspecialchars($libro['Titulo']) ?></h1>
+        <img src="./img_portada/<?= htmlspecialchars($libro['portada']) ?>" class="portada" alt="Portada del libro">
+        <p class="descripcion"><?= nl2br(htmlspecialchars($libro['Descripcion'])) ?></p>
+        <hr>
+
+        <?php
+        if (mysqli_num_rows($capitulos) > 0) {
+            while ($capitulo = mysqli_fetch_assoc($capitulos)) {
+                echo "<div class='capitulo'>";
+                echo "<h2>Capítulo " . $capitulo['numero_capitulo'] . ": " . htmlspecialchars($capitulo['titulo_capitulo']) . "</h2>";
+                echo "<p>" . nl2br(htmlspecialchars($capitulo['contenido'])) . "</p>";
+                echo "</div>";
+            }
+        } else {
+            echo "<p>Este libro aún no tiene capítulos.</p>";
         }
 
-        .capitulo {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 800px;
-            width: 100%;
-            box-shadow: 0 0 10px rgba(255,255,255,0.1);
-        }
+        mysqli_close($conexion);
+        ?>
 
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .contenido {
-            font-size: 1.1em;
-            line-height: 1.7;
-            text-align: justify;
-            white-space: pre-wrap; /* Para respetar saltos de línea */
-        }
-
-        .fecha {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: gray;
-            text-align: right;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-            margin-top: 20px;
-            display: block;
-            text-align: center;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="capitulo">
-        <h1><?php echo htmlspecialchars($capitulo['titulo']); ?></h1>
-
-        <div class="contenido">
-            <?php echo nl2br(htmlspecialchars($capitulo['contenido'])); ?>
-        </div>
-
-        <div class="fecha">
-            Publicado el <?php echo htmlspecialchars($capitulo['fecha_publicacion']); ?>
-        </div>
-    </div>
-
-    <a href="">← Volver a la lista de capítulos</a>
-
-</body>
+    </body>
 </html>
