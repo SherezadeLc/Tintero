@@ -1,11 +1,15 @@
 <?php
 session_start();
 
-if (!isset($_GET['id'])) {
-    echo "No se especificó el libro.";
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: login.php");
     exit();
 }
 
+// Verificación de sesión
+if (!isset($_SESSION["id_usuario"]) || !isset($_SESSION["Nombre_plan"])) {
+    die("Acceso denegado. Debes estar logueado.");
+}
 $id_contenido = intval($_GET['id']);
 
 // Conectar a la base de datos
@@ -70,7 +74,8 @@ $libro = mysqli_fetch_assoc($resultado);
     <div class="botones">
         <a class="btn" href="leer_libro.php?id=<?= $id_contenido ?>">Leer historia</a>
         <a class="btn" href="ver_capitulos.php?id=<?= $id_contenido ?>">Ver capítulos</a>
-        <a class="btn" href="mis_favoritos.php?id_contenido=<?= $id_contenido ?>">Añadir a favoritos ❤️</a>
+        <a class="btn" href="agregar_favoritos.php?id_contenido=<?= $id_contenido ?>">Agregar a favoritos ❤</a>
+
         <a class="btn" href="menuSuscrito.php">Volver</a>
     </div>
 </div>

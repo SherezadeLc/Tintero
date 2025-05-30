@@ -19,6 +19,8 @@
     {
         $insertar = "INSERT INTO lista_favoritos (id_usuario, id_contenido) VALUES ($id_usuario, $id_contenido)";
         mysqli_query($conexion, $insertar);
+        header("Location: mis_favoritos.php");
+            exit();
     }
 
     mysqli_close($conexion);
