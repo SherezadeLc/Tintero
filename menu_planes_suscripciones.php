@@ -108,6 +108,9 @@ session_start();
         </tr>
 
     </table>
+    <form action="menuSuscrito.php" method="POST">
+                <input type="submit" value="Volver">
+    </form>
 
 </body>
 </html>

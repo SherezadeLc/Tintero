@@ -65,7 +65,7 @@ session_start();
                     </nav>
                     <!-- Login -->
                     <div class="nav-right">
-                        <a href="logout.php">Cerrar Sesión</a>
+                        <a href="login.php">Inicar sesión/Registrarse</a>
                     </div>
                 </div>
             </div>
