@@ -1,106 +1,109 @@
 <?php
-    session_start();
-
-    // Verifica que el usuario esté autenticado y tenga su plan cargado
-    if (!isset($_SESSION['id_usuario']) || !isset($_SESSION["Nombre_plan"])) 
-    {
-        die("Acceso no autorizado.");
-    }
-
-    $plan = $_SESSION["Nombre_plan"];
-    $id_usuario = $_SESSION['id_usuario'];
-
-    if (!isset($_GET['id_capitulo'])) 
-    {
-        die("Capítulo no especificado.");
-    }
-
-    $id_capitulo = $_GET['id_capitulo'];
-
-    // Conexión a la base de datos
-    $conexion = mysqli_connect("localhost", "root", "", "tintero");
-    if (!$conexion) 
-    {
-        die("Error de conexión: " . mysqli_connect_error());
-    }
-
-    // Obtener los datos del capítulo y su libro asociado
-    $sql = "SELECT c.*, l.Titulo AS titulo_libro, l.es_publico
-            FROM capitulos c
-            JOIN libro_video l ON c.ID_Contenido = l.ID_Contenido
-            WHERE c.id_capitulo = $id_capitulo";
-
-    $resultado = mysqli_query($conexion, $sql);
-    $capitulo = mysqli_fetch_assoc($resultado);
-
-    if (!$capitulo) 
-    {
-        die("Capítulo no encontrado.");
-    }
-
-    // Verificar si el usuario con plan básico puede acceder
-    if ($plan === 'Plan_Basico' && !$capitulo['es_publico']) 
-    {
-        die("<h2 style='color:red; text-align:center;'>Este capítulo no está disponible para tu plan de suscripción.</h2>");
-    }
-
+session_start();
 ?>
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Leer Capítulo</title>
-    <link rel="stylesheet" href="./css/Registro_Login.css">
-    <style>
-        body {
-            background-color: #2a1f36;
-            color: white;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .contenedor {
-            max-width: 800px;
-            margin: auto;
-            background: #3a2d4d;
-            padding: 30px;
-            border-radius: 10px;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #FFD764;
-        }
-        .contenido {
-            margin-top: 20px;
-            white-space: pre-wrap;
-            line-height: 1.6;
-        }
-        .btn-volver {
-            display: block;
-            margin: 30px auto 0;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-        .btn-volver:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tintero</title>
+        <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
+        <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
+        <script src="./javascript/script.js"></script>
+    </head>
+    <body class="loaded">
+        <div class="contenedor-registro">
+            <form name="form" action="" method="POST" enctype="multipart/form-data">
 
-<div class="contenedor">
-    <h1><?= htmlspecialchars($capitulo['titulo_libro']) ?></h1>
-    <h2>Capítulo <?= $capitulo['numero_capitulo'] ?>: <?= htmlspecialchars($capitulo['titulo_capitulo']) ?></h2>
+                <h2>LOGIN</h2>
+                <hr>
+                <h3>Accede y encuentra lo que buscas</h3><br>
 
-    <div class="contenido">
-        <?= nl2br(htmlspecialchars($capitulo['contenido'])) ?>
-    </div>
+                Nombre usuario:
+                <br><br>
+                <input type="text" name="usuario" value="" />
+                <br><br>
 
-    <a class="btn-volver" href="ver_capitulos.php?id=<?= $capitulo['ID_Contenido'] ?>">← Volver a capítulos</a>
-</div>
+                Contraseña:
+                <br><br>
+                <input type="password" name="contrasena" value="" />
+                <br><br>
 
-</body>
+                <input type="submit" value="Enviar" name="enviar" />
+                <br>
+                <hr>
+                <p>¿No tienes una cuenta? Regístrate aquí</p>
+                <a href="registro.php"><input type="button" class="login-button" value="Registro" name="registro" /></a> 
+
+            </form>
+        </div>
+
+        <?php
+// Si el usuario pulsa el botón de salir
+        if (isset($_REQUEST['salir'])) {
+            unset($_SESSION['usuario']);
+            session_destroy();
+        }
+
+// Verificar si el formulario de login ha sido enviado
+        if (isset($_POST['enviar'])) {
+            // Recuperar los datos del formulario
+            $usuario_ingresado = $_POST['usuario'];
+            $contrasena_ingresada = $_POST['contrasena'];
+
+            // Conexión a la base de datos
+            $conexion = mysqli_connect("localhost", "root", "", "tintero")
+                    or die("No se puede conectar con el servidor o seleccionar la base de datos");
+
+            // Consulta para verificar usuario y contraseña
+            $consulta = "SELECT nombre, id_usuario FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
+
+            $resultado = mysqli_query($conexion, $consulta) or die("Fallo en la consulta");
+            $datosConsulta = mysqli_fetch_assoc($resultado);
+
+            if ($datosConsulta) {
+                // Usuario encontrado, obtener id_usuario
+                $id_usuario = $datosConsulta['id_usuario'];
+                $_SESSION["id_usuario"] = $id_usuario;
+                // Consultar la suscripción
+                $consulta_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE ID_Usuario = '$id_usuario'";
+                $resultadoConsultaSuscripcion = mysqli_query($conexion, $consulta_suscripcion) or die("Fallo en la consulta de suscripción");
+                $datosConsulta_planSuscripcion = mysqli_fetch_assoc($resultadoConsultaSuscripcion);
+
+                if ($datosConsulta_planSuscripcion) {
+                    // Si existe suscripción
+                    $Nombre_Plan = $datosConsulta_planSuscripcion['Nombre_Plan'];
+                    $_SESSION["Nombre_plan"] = $Nombre_Plan;
+                    // Consultar nombre del plan
+                    $consulta_Plan_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE Nombre_Plan = '$Nombre_Plan'";
+                    $resultadoPlanSuscripcion = mysqli_query($conexion, $consulta_Plan_suscripcion) or die("Fallo en la consulta de plan");
+                    $datosConsulta_Plan_Suscripcion = mysqli_fetch_assoc($resultadoPlanSuscripcion);
+
+                    // Iniciar sesión
+                    $_SESSION['usuario'] = $usuario_ingresado;
+                    $_SESSION['Nombre_Plan'] = $datosConsulta_Plan_Suscripcion['Nombre_Plan'];
+
+                    // Redireccionar según el plan
+                    if ($_SESSION['Nombre_Plan'] == 'Plan Basico') {
+                        header('Location: menuSuscrito.php');
+                        exit;
+                    } elseif ($_SESSION['Nombre_Plan'] == 'Plan Estandar') {
+                        header('Location: menuSuscrito.php');
+                        exit;
+                    } elseif ($_SESSION['Nombre_Plan'] == 'Plan Premium') {
+                        header('Location: menuSuscrito.php');
+                        exit;
+                    }
+                } else {
+                    echo "<p style='color:red; text-align:center;'>Este usuario no tiene una suscripción activa.</p>";
+                }
+            } else {
+                echo "<p style='color:red; text-align:center;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+            }
+
+            // Cerrar conexión
+            mysqli_close($conexion);
+        }
+        ?>
+    </body>
 </html>
