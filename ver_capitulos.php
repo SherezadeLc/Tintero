@@ -30,7 +30,6 @@ $sql_capitulos = "SELECT id_capitulo, numero_capitulo, titulo_capitulo
                   WHERE ID_Contenido = $id_contenido 
                   ORDER BY numero_capitulo ASC";
 $res_capitulos = mysqli_query($conexion, $sql_capitulos);
-
 ?>
 
 <!DOCTYPE html>
@@ -47,14 +46,17 @@ $res_capitulos = mysqli_query($conexion, $sql_capitulos);
         }
         h1 {
             color: #ffd769;
+            text-align: center;
         }
         .capitulo {
             padding: 15px;
             border-bottom: 1px solid #444;
+            text-align: center;
         }
         .capitulo a {
             text-decoration: none;
             color: #ffffff;
+            font-size: 18px;
         }
         .capitulo a:hover {
             color: #ffd769;
@@ -63,23 +65,24 @@ $res_capitulos = mysqli_query($conexion, $sql_capitulos);
 </head>
 <body>
 
-    <h1>Capítulos de: <?= htmlspecialchars($libro['Titulo']) ?></h1>
+<h1>Capítulos de: <?= htmlspecialchars($libro['Titulo']) ?></h1>
 
-    <?php
-    if (mysqli_num_rows($res_capitulos) > 0) {
-        while ($cap = mysqli_fetch_assoc($res_capitulos)) {
-            echo "<div class='capitulo'>";
-            echo "<a href='leer_capitulo.php?id=" . $cap['id_capitulo'] . "'>";
-            echo "Capítulo " . $cap['numero_capitulo'] . ": " . htmlspecialchars($cap['titulo_capitulo']);
-            echo "</a>";
-            echo "</div>";
-        }
-    } else {
-        echo "<p>Este libro aún no tiene capítulos publicados.</p>";
+<?php
+if (mysqli_num_rows($res_capitulos) > 0) {
+    while ($cap = mysqli_fetch_assoc($res_capitulos)) {
+        echo "<div class='capitulo'>";
+        echo "<a href='leer_capitulo.php?id_capitulo=" . $cap['id_capitulo'] . "'>";
+        
+        echo "Capítulo " . $cap['numero_capitulo'] . ": " . htmlspecialchars($cap['titulo_capitulo']);
+        echo "</a>";
+        echo "</div>";
     }
+} else {
+    echo "<p>Este libro aún no tiene capítulos publicados.</p>";
+}
 
-    mysqli_close($conexion);
-    ?>
+mysqli_close($conexion);
+?>
 
 </body>
 </html>

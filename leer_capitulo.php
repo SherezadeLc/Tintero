@@ -15,7 +15,7 @@
         die("Capítulo no especificado.");
     }
 
-    $id_capitulo = intval($_GET['id_capitulo']);
+    $id_capitulo = $_GET['id_capitulo'];
 
     // Conexión a la base de datos
     $conexion = mysqli_connect("localhost", "root", "", "tintero");
