@@ -20,7 +20,7 @@ session_start();
     }
 
     session_destroy();
-
+//prueba
 // Fechas para novedades
     $fechaActual = date('Y-m-d');
     $fechaHaceUnMes = date('Y-m-d', strtotime('-1 month'));
