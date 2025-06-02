@@ -25,9 +25,9 @@
     }
 
     // Obtener los datos del capítulo y su libro asociado
-    $sql = "SELECT c.*, l.Titulo AS titulo_libro, l.es_publico
+    $sql = "SELECT c.*, l.Titulo AS titulo_libro
             FROM capitulos c
-            JOIN libro_video l ON c.ID_Contenido = l.ID_Contenido
+            JOIN libro l ON c.ID_Contenido = l.ID_Contenido
             WHERE c.id_capitulo = $id_capitulo";
 
     $resultado = mysqli_query($conexion, $sql);
@@ -39,7 +39,7 @@
     }
 
     // Verificar si el usuario con plan básico puede acceder
-    if ($plan === 'Plan_Basico' && !$capitulo['es_publico']) 
+    if ($plan === 'Plan_Basico' ) 
     {
         die("<h2 style='color:red; text-align:center;'>Este capítulo no está disponible para tu plan de suscripción.</h2>");
     }
