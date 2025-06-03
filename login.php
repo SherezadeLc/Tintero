@@ -64,12 +64,24 @@ session_start();
             if ($datosConsulta) {
                 // Usuario encontrado, obtener id_usuario
                 $id_usuario = $datosConsulta['id_usuario'];
+                $nombre_usuario = $datosConsulta['nombre'];
+                
                 $_SESSION["id_usuario"] = $id_usuario;
+                $_SESSION["nombre_usuario"] = $nombre_usuario;
+                
+                if($_SESSION["nombre_usuario"] == "admin"){
+                     header('Location: admin_panel.php');
+                        exit;
+                }
+                
                 // Consultar la suscripción
                 $consulta_suscripcion = "SELECT Nombre_Plan FROM suscripcion WHERE ID_Usuario = '$id_usuario'";
                 $resultadoConsultaSuscripcion = mysqli_query($conexion, $consulta_suscripcion) or die("Fallo en la consulta de suscripción");
                 $datosConsulta_planSuscripcion = mysqli_fetch_assoc($resultadoConsultaSuscripcion);
-
+                
+                
+                
+                
                 if ($datosConsulta_planSuscripcion) {
                     // Si existe suscripción
                     $Nombre_Plan = $datosConsulta_planSuscripcion['Nombre_Plan'];

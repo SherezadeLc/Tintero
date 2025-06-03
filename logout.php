@@ -62,8 +62,8 @@
             
             session_start();
             print '<h1>Estás en Logout</h1>';
-            if (isset($_SESSION["nombre"])) {
-                print 'Hasta pronto, ' . $_SESSION["nombre"] . '<br>';
+            if (isset($_SESSION["nombre_usuario"])) {
+                print 'Hasta pronto, ' . $_SESSION["nombre_usuario"] . '<br>';
             } else {
                 print 'No hay usuario activo.<br>';
             }
