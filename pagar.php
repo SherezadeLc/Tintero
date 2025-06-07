@@ -65,9 +65,38 @@ $_SESSION['plan_seleccionado'] = [
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+       
+    <meta charset="UTF-8">
+   <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
+
         <title>Confirmación de Pago</title>
     </head>
+    <div class="contenedor-registro">
+    <form name="form_tarjeta" action="pago_exitoso.php" method="POST" enctype="multipart/form-data">
+
+        <h2>Datos de la Tarjeta</h2>
+        <hr> 
+        <h3>Introduce la información de tu método de pago</h3><br>
+
+        Número de Tarjeta:<br><br>
+        <input type="text" name="numero_tarjeta" placeholder="Ej: 1234 5678 9012 3456" required><br><br>
+
+        Nombre del Titular:<br><br>
+        <input type="text" name="nombre_titular" placeholder="Nombre completo" required><br><br>
+
+        Fecha de Expiración (MM/AA):<br><br>
+        <input type="text" name="fecha_expiracion" placeholder="MM/AA" required><br><br>
+
+        Código de Seguridad (CVV):<br><br>
+        <input type="text" name="cvv" placeholder="Ej: 123" required><br><br>
+
+        
+
+        <hr>
+       
+    </form>
+</div>
+
     <body style="background-color:#2a1f36; color:white; font-family: Arial; padding: 20px;">
         <h2>Resumen del Plan Seleccionado</h2>
         <p><strong>Nombre del Plan:</strong> <?= $_SESSION['plan_seleccionado']['nombre_plan'] ?></p>

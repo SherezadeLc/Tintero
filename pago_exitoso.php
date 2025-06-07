@@ -1,81 +1,104 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tintero - Registro</title>
+        <title>Tintero</title>
         <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
         <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
         <script src="./javascript/script.js"></script>
+        <style>
+            body {
+                background-color: #2a1f36;
+                color: white;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding-top: 50px;
+            }
+            .resumen {
+                background-color: #3a2d4d;
+                padding: 20px;
+                border-radius: 10px;
+                display: inline-block;
+            }
+            .btn {
+                padding: 10px 20px;
+                background-color: #28a745;
+                border: none;
+                color: white;
+                border-radius: 5px;
+                margin-top: 20px;
+                text-decoration: none;
+            }
+            .btn:hover {
+                background-color: #218838;
+            }
+        </style>
     </head>
-    <body class="loaded">
-        <div class="contenedor-registro">
-            <h2>Registro</h2>
-            <hr><br>
-            <form method="POST" onsubmit="return validarCorreo()">
-                <label>Nombre:</label>
-                <input type="text" name="nombre" required><br>
-
-                <label>Apellido:</label>
-                <input type="text" name="apellido" required><br>
-
-                <label>Correo electrónico:</label>
-                <input type="email" name="email" id="email" required>
-                <span id="error-message">Correo inválido</span><br>
-
-                <label>Contraseña:</label>
-                <input type="password" name="contrasena" required><br>
-
-                <!-- Aquí agregamos el atributo name="registrar" -->
-                <input type="submit" value="Registrar" name="registrar">
-            </form>
-
-            <p>¿Ya tienes cuenta?</p>
-            <a href="login.php"><button class="login-button">Iniciar sesión</button></a>
-            <p>¿No quieres registrarte? <a href="index.php">Pulsa aquí</a></p>
-        </div>
+    <body>
 
         <?php
-// Conexión a la base de datos
-        $conexion = mysqli_connect("localhost", "root", "", "tintero")
-                or die("No se puede conectar con el servidor o seleccionar la base de datos");
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if (isset($_SESSION['plan_seleccionado'])) {
+                $nombre_plan = $_SESSION['plan_seleccionado']['nombre_plan'];
+                $modo = ucfirst($_SESSION['plan_seleccionado']['modo_pago']);
+                $precio = $_SESSION['plan_seleccionado']['precio'];
+                $duracion = $_SESSION['plan_seleccionado']['duracion'];
+                $beneficios = $_SESSION['plan_seleccionado']['beneficios'];
+                ?>
 
-// Comprobar si se ha enviado el formulario
-        if (isset($_POST['registrar'])) {
-            $nombre = $_POST['nombre'];
-            $apellido = $_POST['apellido'];
-            $email = $_POST['email'];
-            $contrasena = $_POST['contrasena'];
+                <div class="resumen">
+                    <h2>¡Pago realizado con éxito!</h2>
+                    <p><strong>Plan seleccionado:</strong> <?= $nombre_plan ?></p>
+                    <p><strong>Modo de pago:</strong> <?= $modo ?></p>
+                    <p><strong>Metodo de pago:</strong> Tarjeta</p>
+                    <p><strong>Duración:</strong> <?= $duracion ?> meses</p>
+                    <p><strong>Precio:</strong> <?= $precio ?> €</p>
+                    <p><strong>Beneficios incluidos:</strong></p>
+                    <p style="text-align: left;"><?= nl2br($beneficios) ?></p>
+                    <?php
+                    $conexion = mysqli_connect("localhost", "root", "", "tintero")
+                            or die("No se puede conectar con el servidor o seleccionar la base de datos");
 
-            // Validar el correo
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo "<p style='color:red; text-align:center;'>Correo inválido</p>";
+                    $id_usuario = $_SESSION["id_usuario"];
+
+                    // Cálculo de fechas
+                    $fechaInicio = new DateTime();
+                    $fechaFin = clone $fechaInicio;
+                    $fechaFin->modify("+$duracion months");
+                    $diferencia = $fechaInicio->diff($fechaFin);
+
+                    $meses = $diferencia->m + ($diferencia->y * 12);
+                    $dias = $diferencia->d;
+
+                    echo "Fecha de inicio: " . $fechaInicio->format('Y-m-d') . "<br>";
+                    echo "Fecha de fin: " . $fechaFin->format('Y-m-d') . "<br>";
+                    echo "Duración real: $meses meses y $dias días.<br>";
+
+// Convertir objetos DateTime a string antes de usarlos en la consulta SQL
+                    $fechaInicio = $fechaInicio->format('Y-m-d');
+                    $fechaFin = $fechaFin->format('Y-m-d');
+
+                    $updateSuscripcionUsuario = "UPDATE suscripcion 
+    SET Fecha_Inicio = '$fechaInicio', Fecha_Finalizacion = '$fechaFin', Precio ='$precio', Nombre_Plan = '$nombre_plan', Beneficios_Incluidos = '$beneficios', Duracion_Meses = '$duracion'
+    WHERE id_usuario = '$id_usuario'";
+
+                    $resultado = mysqli_query($conexion, $updateSuscripcionUsuario) or die("Fallo en el update de suscripcion del usuario");
+                    ?>
+                    <a class="btn" href="menuSuscrito.php">Volver</a>
+                </div>
+
+                <?php
             } else {
-                $fechaActual = date("Y-m-d");
-
-                // Insertar usuario
-                $sql = "INSERT INTO usuario(Nombre, Apellido, Correo_Electronico, Contrasena, Fecha_Registro, Tipo_Usuario) 
-                VALUES ('$nombre', '$apellido', '$email', '$contrasena', '$fechaActual', 'Normal')";
-
-                if (mysqli_query($conexion, $sql)) {
-                    $id_usuario = mysqli_insert_id($conexion); // ID del usuario recién registrado
-                    // Insertar suscripción básica
-                    $sql_insert_suscripcion = "INSERT INTO suscripcion(Fecha_Inicio, Fecha_Finalizacion, Precio, ID_Usuario) 
-                                       VALUES ('$fechaActual', NULL, '0.00', '$id_usuario')";
-
-                    if (mysqli_query($conexion, $sql_insert_suscripcion)) {
-                        echo "<p style='color:green; text-align:center;'>Usuario registrado con éxito</p>";
-                    } else {
-                        echo "<p style='color:red; text-align:center;'>Error en la suscripción: " . mysqli_error($conexion) . "</p>";
-                    }
-                } else {
-                    echo "<p style='color:red; text-align:center;'>Error al registrar usuario: " . mysqli_error($conexion) . "</p>";
-                }
+                echo "<p style='color: red;'>No hay información de plan en la sesión.</p>";
             }
+        } else {
+            echo "<p style='color: red;'>Acceso no válido.</p>";
         }
-
-// Cerrar la conexión
-        mysqli_close($conexion);
         ?>
+
     </body>
 </html>
