@@ -100,6 +100,7 @@ form input[type="submit"]:hover, form button:hover{
         <br>
         <input type="submit" name="guardar_capitulo" value="Guardar Capítulo">
         <button id="boton_cancelar" type="button" class="btn">Cancelar</button>
+        <a href="menuSuscrito.php"><button  type="button" class="btn">Salir</button></a>
     </form>
 <script>
   document.getElementById("boton_cancelar").addEventListener("click", function () {
