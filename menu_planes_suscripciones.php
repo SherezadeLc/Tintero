@@ -1,175 +1,116 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
-    exit();
-}
-
-$id_usuario = $_SESSION['id_usuario'];
-$conexion = mysqli_connect("localhost", "root", "", "tintero");
-
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
-
-// Actualizar estado si se envió un formulario
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_contenido'], $_POST['accion'])) {
-    $id_contenido = intval($_POST['id_contenido']);
-    $accion = $_POST['accion'];
-    $estado = ($accion === 'publicar') ? 'Publicado' : 'Borrador';
-
-    $update = "UPDATE libro SET Estado = '$estado' WHERE ID_Contenido = $id_contenido AND ID_Autor = $id_usuario";
-    mysqli_query($conexion, $update);
-}
-
-// Obtener historias del usuario
-$sql = "SELECT ID_Contenido, Titulo, portada, Estado FROM libro WHERE ID_Autor = '$id_usuario'";
-$resultado = mysqli_query($conexion, $sql);
 ?>
-
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Mis Historias | Tintero</title>
-    <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tintero</title>
+    <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
     <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
+    <script src="./javascript/script.js"></script>
     <style>
         body {
             background-color: #2a1f36;
             color: white;
             font-family: Arial, sans-serif;
         }
-        h1 {
-            text-align: center;
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: auto;
             margin-top: 50px;
-            font-size: 40px;
-            text-shadow: 0 0 10px rgb(255, 217, 105),
-                         0 0 20px rgb(255, 217, 105),
-                         0 0 40px rgb(255, 217, 105),
-                         0 0 80px rgb(255, 217, 105);
+            background-color: #3a2d4d;
         }
-        .contenedor-historias {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin: 50px auto;
-            padding: 0 40px;
-            max-width: 1200px;
-        }
-        .tarjeta-historia {
-            background-color: #1e1e1e;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            width: 200px;
-            transition: transform 0.3s, box-shadow 0.3s;
+        th, td {
+            border: 1px solid #555;
+            padding: 12px;
             text-align: center;
-            padding-bottom: 10px;
+            vertical-align: middle;
         }
-        .tarjeta-historia:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 217, 105, 0.8);
-        }
-        .tarjeta-historia img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-        .titulo-historia {
-            font-size: 18px;
-            padding: 10px;
+        th {
+            background-color: #0077cc;
             color: white;
-            font-weight: bold;
-        }
-        form {
-            margin-top: 10px;
+            font-size: 16px;
         }
         .btn {
-            padding: 6px 12px;
-            margin: 4px;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-publicar {
+            padding: 10px 18px;
             background-color: #28a745;
             color: white;
-        }
-        .btn-publicar:hover {
-            background-color: #218838;
-        }
-        .btn-borrador {
-            background-color: #ffc107;
-            color: black;
-        }
-        .btn-borrador:hover {
-            background-color: #e0a800;
-        }
-        .btn-anadir {
-            background-color: #17a2b8;
-            color: white;
-        }
-        .btn-anadir:hover {
-            background-color: #138496;
-        }
-        .estado {
-            font-size: 14px;
-            color: #ccc;
-        }
-        .btn-volver {
-            display: block;
-            margin: 40px auto;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
+            text-decoration: none;
             border: none;
             border-radius: 6px;
             font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
+            display: inline-block;
         }
-        .btn-volver:hover {
-            background-color: #0056b3;
+        .btn:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
 
-    <h1>Mis Historias</h1>
+    <h2 style="text-align: center;">Planes de Suscripción</h2>
 
-    <div class="contenedor-historias">
-        <?php if (mysqli_num_rows($resultado) > 0): ?>
-            <?php while ($historia = mysqli_fetch_assoc($resultado)): ?>
-                <div class="tarjeta-historia">
-                    <a href="crearCapitulo.php?id=<?= urlencode($historia['ID_Contenido']) ?>">
-                        <img src="./img_portada/<?= htmlspecialchars($historia['portada']) ?>" alt="Portada">
-                    </a>
-                    <div class="titulo-historia"><?= htmlspecialchars($historia['Titulo']) ?></div>
-                    <div class="estado">(Estado: <?= htmlspecialchars($historia['Estado']) ?>)</div>
-                    <form method="POST" action="">
-                        <input type="hidden" name="id_contenido" value="<?= $historia['ID_Contenido'] ?>">
-                        <button type="submit" name="accion" value="publicar" class="btn btn-publicar">Publicar</button>
-                        <button type="submit" name="accion" value="borrador" class="btn btn-borrador">Borrador</button>
-                    </form>
-                    <form method="GET" action="crearCapitulo.php">
-                        <input type="hidden" name="id" value="<?= $historia['ID_Contenido'] ?>">
-                        <button type="submit" class="btn btn-anadir">Añadir Capítulo</button>
-                    </form>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p style="text-align:center;">No has creado ninguna historia todavía.</p>
-        <?php endif; ?>
-    </div>
+    <table>
+        <tr>
+            <th>Nombre del Plan</th>
+            <th>Precio Mensual</th>
+            <th>Precio Anual</th>
+            <th>Beneficios Incluidos</th>
+            <th>Pagar Mensualmente</th>
+            <th>Pagar Anualmente</th>
+        </tr>
 
-    <a href="menuSuscrito.php" class="btn-volver">Volver al Menú</a>
+        <tr>
+            <td>Plan Basico</td>
+            <td>0 €</td>
+            <td>0 €</td>
+            <td>
+                Acceso a la plataforma y funciones básicas de creación y publicación de historias. Herramientas de edición y formateo de texto básicas. Posibilidad de compartir contenido con otros usuarios. Acceso limitado a plantillas y funciones de diseño.
+            </td>
+            <td><a class='btn' href='pagar.php?plan=basico&modo=mensual'>Pagar Mensual</a></td>
+            <td><a class='btn' href='pagar.php?plan=basico&modo=anual'>Pagar Anual</a></td>
+        </tr>
+
+        <tr>
+            <td>Plan Estandar</td>
+            <td>28.99 €</td>
+            <td>30.99 €</td>
+            <td>
+                Todo lo incluido en el Plan Básico. Acceso a un conjunto más amplio de herramientas de creación y edición. Posibilidad de personalizar plantillas y diseños. Analíticas básicas sobre el rendimiento de las publicaciones.
+            </td>
+            <td><a class='btn' href='pagar.php?plan=estandar&modo=mensual'>Pagar Mensual</a></td>
+            <td><a class='btn' href='pagar.php?plan=estandar&modo=anual'>Pagar Anual</a></td>
+        </tr>
+
+        <tr>
+            <td>Plan Premium</td>
+            <td>48.99 €</td>
+            <td>60.99 €</td>
+            <td>
+                Todo lo incluido en el Plan Estándar. Acceso a herramientas avanzadas de creación de contenido visual. Plantillas personalizadas y exclusivas. Funcionalidades adicionales para mejorar la visibilidad y promoción del contenido. Analíticas detalladas sobre el rendimiento y compromiso de las publicaciones. Acceso prioritario a soporte y asistencia.
+            </td>
+            <td><a class='btn' href='pagar.php?plan=premium&modo=mensual'>Pagar Mensual</a></td>
+            <td><a class='btn' href='pagar.php?plan=premium&modo=anual'>Pagar Anual</a></td>
+        </tr>
+
+        <tr>
+            <td>Mes Prueba</td>
+            <td>0 €</td>
+            <td>-</td>
+            <td>
+                Todo lo incluido en el Plan Estándar. Acceso a herramientas avanzadas de creación de contenido visual. Plantillas personalizadas y exclusivas. Funcionalidades adicionales para mejorar la visibilidad y promoción del contenido. Analíticas detalladas sobre el rendimiento y compromiso de las publicaciones. Acceso prioritario a soporte y asistencia.
+            </td>
+            <td><a class='btn' href='pagar.php?plan=mes_prueba&modo=mensual'>Activar</a></td>
+            <td>-</td>
+        </tr>
+
+    </table>
+    <form action="menuSuscrito.php" method="POST">
+                <input type="submit" value="Volver">
+    </form>
 
 </body>
 </html>
-
-<?php mysqli_close($conexion); ?>
