@@ -90,7 +90,7 @@ $capitulos = mysqli_query($conexion, $sql_capitulos);
             while ($capitulo = mysqli_fetch_assoc($capitulos)) {
                 echo "<div class='capitulo'>";
                 echo "<h2>Capítulo " . $capitulo['numero_capitulo'] . ": " . htmlspecialchars($capitulo['titulo_capitulo']) . "</h2>";
-                echo "<p>" . nl2br(htmlspecialchars($capitulo['contenido'])) . "</p>";
+                echo "<p>" . nl2br(htmlspecialchars_decode($capitulo['contenido'])) . "</p>";
                 echo "</div>";
             }
         } else {
