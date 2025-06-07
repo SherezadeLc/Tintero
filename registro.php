@@ -60,8 +60,11 @@
                 if (mysqli_query($conexion, $sql)) {
                     $id_usuario = mysqli_insert_id($conexion); // ID del usuario recién registrado
                     // Insertar suscripción básica
-                    $sql_insert_suscripcion = "INSERT INTO suscripcion(Fecha_Inicio, Fecha_Finalizacion, Precio, ID_Usuario,Nombre_Plan) 
-                                       VALUES ('$fechaActual', NULL, '0.00', '$id_usuario','Plan Basico')";
+                    $sql_insert_suscripcion = "INSERT INTO suscripcion(Fecha_Inicio, Fecha_Finalizacion, Precio, ID_Usuario,Nombre_Plan,Beneficios_Incluidos) 
+                                       VALUES ('$fechaActual', NULL, '0.00', '$id_usuario','Plan Basico','Acceso a la plataforma y funciones básicas de creación y publicación de historias.
+                                                Herramientas de edición y formateo de texto básicas.
+                                                Posibilidad de compartir contenido con otros usuarios.
+                                                Acceso limitado a plantillas y funcionalidades de diseño.')";
 
                     if (mysqli_query($conexion, $sql_insert_suscripcion)) {
                         echo "<p style='color:green; text-align:center;'>Usuario registrado con éxito</p>";
