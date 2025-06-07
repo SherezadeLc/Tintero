@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_usuario'])) {
 }
 
 // Verificación de sesión
-if (!isset($_SESSION["id_usuario"]) || !isset($_SESSION["Nombre_plan"])) {
+if (!isset($_SESSION["id_usuario"]) || !isset($_SESSION["Nombre_Plan"])) {
     die("Acceso denegado. Debes estar logueado.");
 }
 
