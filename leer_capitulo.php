@@ -1,14 +1,10 @@
 <?php
     session_start();
 
-    // Verifica que el usuario esté autenticado y tenga su plan cargado
-    if (!isset($_SESSION['id_usuario']) || !isset($_SESSION["Nombre_plan"])) 
-    {
-        die("Acceso no autorizado.");
-    }
-
-    $plan = $_SESSION["Nombre_plan"];
-    $id_usuario = $_SESSION['id_usuario'];
+    $_SESSION["Nombre_Plan"];
+$_SESSION['id_usuario'];
+$plan = $_SESSION["Nombre_Plan"];
+$id_usuario = $_SESSION['id_usuario'];
 
     if (!isset($_GET['id_capitulo'])) 
     {

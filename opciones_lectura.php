@@ -6,10 +6,7 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-// Verificación de sesión
-if (!isset($_SESSION["id_usuario"]) || !isset($_SESSION["Nombre_Plan"])) {
-    die("Acceso denegado. Debes estar logueado.");
-}
+
 
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 if (!$conexion) {
