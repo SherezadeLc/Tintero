@@ -46,18 +46,28 @@ mysqli_close($conexion);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tintero - Crear Capítulo</title>
+    <title>Tintero</title>
     <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="./css/Crear_Capitulo.css">
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
-    <script>
-        window.onload = function () {
-            CKEDITOR.replace('contenido_capitulo', {
-                height: 300,
-                uiColor: '#34214d'
-            });
-        };
-    </script>
+    <!-- Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+
+<!-- jQuery (requerido por Summernote) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Summernote JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#contenido_capitulo').summernote({
+      placeholder: 'Escribe el contenido de tu capítulo aquí...',
+      tabsize: 2,
+      height: 300
+    });
+  });
+</script>
+
 </head>
 <body>
 
