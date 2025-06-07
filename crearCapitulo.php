@@ -58,6 +58,23 @@ mysqli_close($conexion);
             });
         };
     </script>
+    <style>
+        /* Estilo de los botones */
+form input[type="submit"], form button{
+    background-color: #6a3f8b;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover, form button:hover{
+    background-color: #110011;
+}
+    </style>
 </head>
 <body>
 
@@ -82,8 +99,12 @@ mysqli_close($conexion);
         </div>
         <br>
         <input type="submit" name="guardar_capitulo" value="Guardar Capítulo">
-        <a href="menuSuscrito.php"><button type="button" id="boton_cancelar">Cancelar</button></a>
+        <button id="boton_cancelar" type="button" class="btn">Cancelar</button>
     </form>
-
+<script>
+  document.getElementById("boton_cancelar").addEventListener("click", function () {
+    history.back();
+  });
+</script>
 </body>
 </html>

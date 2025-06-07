@@ -60,22 +60,6 @@ form textarea {
     resize: vertical;
 }
 
-form input[type="submit"] {
-    background-color: #6a3f8b;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-form input[type="submit"]:hover {
-    background-color: #110011;
-}
-
-
 
 /* Estilo de los campos de texto en los formularios */
 input[type="text"], textarea {
@@ -90,6 +74,3 @@ input[type="text"]:focus, textarea:focus {
     outline: none;
     background-color: whitesmoke;
 }
-
-/* Estilos adicionales si es necesario */
-
