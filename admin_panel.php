@@ -12,30 +12,30 @@ if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Acciones al recibir POST (formulario enviado)
+// Si el formulario fue enviado (POST), ejecutar las acciones según el botón presionado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Suspender usuario
+    // Acción: Suspender usuario
     if (isset($_POST['suspender'])) {
         $id = $_POST['id_usuario'];
         mysqli_query($conexion, "UPDATE usuario SET estado = 'suspendido' WHERE id_usuario = $id");
     }
-    // Activar usuario
+    // Acción: Activar usuario
     if (isset($_POST['activar'])) {
         $id = $_POST['id_usuario'];
         mysqli_query($conexion, "UPDATE usuario SET estado = 'activo' WHERE id_usuario = $id");
     }
-    // Eliminar contenido reportado
+    // Acción: Eliminar libro reportado
     if (isset($_POST['eliminar'])) {
         $id = $_POST['id_contenido'];
         mysqli_query($conexion, "DELETE FROM libro WHERE ID_Contenido = $id");
     }
-    // Marcar como revisado (deja de estar reportado)
+    // Acción: Marcar como revisado un libro reportado (quitar estado de reporte)
     if (isset($_POST['marcar_revisado'])) {
         $id = $_POST['id_contenido'];
         mysqli_query($conexion, "UPDATE libro SET reportado = 0 WHERE ID_Contenido = $id");
     }
 
-    // Recarga la página después de la acción
+    // Redireccionar a sí mismo para evitar reenvíos de formulario
     header("Location: admin_panel.php");
     exit;
 }
@@ -54,15 +54,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <script src="./javascript/script.js"></script>
     </head>
     <body>
+        <!-- Encabezado -->
         <h1>Bienvenido Administrador</h1>
 
-        <!-- Gestión de Usuarios -->
+         <!-- Sección para gestionar usuarios -->
         <h2>Gestión de Usuarios</h2>
         <table border="1">
             <tr><th>ID</th><th>Nombre</th><th>Estado</th><th>Acción</th></tr>
             <?php
+            // Obtener todos los usuarios registrados
             $res = mysqli_query($conexion, "SELECT id_usuario, nombre, estado FROM usuario");
             while ($row = mysqli_fetch_assoc($res)) {
+                // Mostrar cada usuario con botones para suspender o activar
                 echo "<tr>
                     <td>{$row['id_usuario']}</td>
                     <td>{$row['nombre']}</td>
@@ -79,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
         </table>
 
-        <!-- Contenido Reportado -->
+         <!-- Sección de contenido reportado -->
         <h2 style="margin-top: 40px;">Contenido Reportado</h2>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
             <thead style="background-color: #4b3a6b; color: white;">
@@ -91,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </thead>
             <tbody>
                 <?php
+                // Buscar libros marcados como reportados
                 $res = mysqli_query($conexion, "SELECT ID_Contenido, Titulo FROM libro WHERE reportado = 1");
 
                 if (mysqli_num_rows($res) > 0) {
@@ -99,14 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <td>{$row['ID_Contenido']}</td>
                             <td>" . htmlspecialchars($row['Titulo']) . "</td>
                             <td>
+                            <!-- Eliminar contenido -->
                                 <form method='post' style='display:inline;'>
                                     <input type='hidden' name='id_contenido' value='{$row['ID_Contenido']}'>
                                     <button type='submit' name='eliminar' onclick=\"return confirm('¿Seguro que quieres eliminar este contenido?')\">❌ Eliminar</button>
                                 </form>
+                                <!-- Ver capítulos -->
                                 <form method='get' action='ver_capitulos.php' style='display:inline;'>
                                     <input type='hidden' name='id' value='{$row['ID_Contenido']}'>
                                     <button type='submit'>📖 Ver Capítulos</button>
                                 </form>
+                                <!-- Marcar como revisado -->
                                 <form method='post' style='display:inline;'>
                                     <input type='hidden' name='id_contenido' value='{$row['ID_Contenido']}'>
                                     <button type='submit' name='marcar_revisado'>✅ Marcar como Revisado</button>

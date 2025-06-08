@@ -1,30 +1,44 @@
 <?php
-session_start();
+     // Inicia la sesión para poder usar variables de sesión
+    session_start();
 ?>
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Configuración del encabezado del documento -->
+        <!-- Codificación de caracteres -->
         <meta charset="UTF-8">
+        <!-- Responsividad en dispositivos móviles -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Título de la pestaña del navegador -->
         <title>Tintero</title>
+        <!-- Ícono del sitio (favicon) -->
         <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
+         <!-- Hojas de estilo externas para diseño -->
+         <!-- Estilos específicos de esta página -->
         <link rel="stylesheet" type="text/css" href="./css/Menu_planes_suscripciones.css">
+        <!-- Estilos del fondo animado -->
         <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css">
+        <!-- Script JS general -->
         <script src="./javascript/script.js"></script>
     </head>
     <body>
-        <!-- Fondo de estrellas -->
+       <!-- Fondo animado con elementos "firefly" (luciérnagas) -->
         <div id="estrellas">
+            <!-- Se crean 10 elementos div que simulan estrellas animadas -->
             <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
             <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
             <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
             <div class="firefly"></div>
         </div>
 
+       <!-- Título principal centrado -->
         <h2 style="text-align: center;">Planes de Suscripción</h2>
 
+        <!-- Tabla con los distintos planes disponibles -->
         <table>
             <tr>
+                <!-- Encabezados de la tabla -->
                 <th>Nombre del Plan</th>
                 <th>Precio Mensual</th>
                 <th>Precio Anual</th>
@@ -33,6 +47,7 @@ session_start();
                 <th>Pagar Anualmente</th>
             </tr>
 
+            <!-- Fila: Plan Básico -->
             <tr>
                 <td>Plan Basico</td>
                 <td>0 €</td>
@@ -44,6 +59,7 @@ session_start();
                 <td><a class='btn' href='pagar.php?plan=basico&modo=anual'>Pagar Anual</a></td>
             </tr>
 
+            <!-- Fila: Plan Estándar -->
             <tr>
                 <td>Plan Estandar</td>
                 <td>28.99 €</td>
@@ -55,6 +71,7 @@ session_start();
                 <td><a class='btn' href='pagar.php?plan=estandar&modo=anual'>Pagar Anual</a></td>
             </tr>
 
+            <!-- Fila: Plan Premium -->
             <tr>
                 <td>Plan Premium</td>
                 <td>48.99 €</td>
@@ -66,6 +83,7 @@ session_start();
                 <td><a class='btn' href='pagar.php?plan=premium&modo=anual'>Pagar Anual</a></td>
             </tr>
 
+            <!-- Fila: Mes de prueba -->
             <tr>
                 <td>Mes Prueba</td>
                 <td>0 €</td>
@@ -78,6 +96,7 @@ session_start();
             </tr>
 
         </table>
+        <!-- Botón para volver al menú del usuario suscrito -->
         <a href="menuSuscrito.php"><button id="boton-volver">Volver</button></a>
 
     </body>

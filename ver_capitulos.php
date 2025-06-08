@@ -1,35 +1,43 @@
 <?php
-session_start();
+    // Inicia la sesión para mantener datos del usuario
+    session_start();
 
-// Verifica si se ha pasado un ID de libro
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    die("Libro no especificado.");
-}
+    // Verifica si se ha pasado un ID de libro por la URL y si es un número válido
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        // Detiene la ejecución si no hay ID válido
+        die("Libro no especificado.");
+    }
 
-$id_contenido = intval($_GET['id']);
+    // Convierte el ID recibido a número entero para seguridad
+    $id_contenido = intval($_GET['id']);
 
-// Conexión a la base de datos
-$conexion = mysqli_connect("localhost", "root", "", "tintero");
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
+    // Conexión a la base de datos
+    $conexion = mysqli_connect("localhost", "root", "", "tintero");
+    if (!$conexion) {
+        // Muestra error si no se puede conectar
+        die("Error de conexión: " . mysqli_connect_error());
+    }
 
-// Obtener título del libro
-$sql_libro = "SELECT Titulo FROM libro WHERE ID_Contenido = $id_contenido";
-$res_libro = mysqli_query($conexion, $sql_libro);
+    // Consulta para obtener el título del libro usando el ID de contenido
+    $sql_libro = "SELECT Titulo FROM libro WHERE ID_Contenido = $id_contenido";
+    $res_libro = mysqli_query($conexion, $sql_libro);
 
-if (mysqli_num_rows($res_libro) == 0) {
-    die("Libro no encontrado.");
-}
+    // Verifica si se encontró el libro
+    if (mysqli_num_rows($res_libro) == 0) {
+        // Detiene si no existe el libro
+        die("Libro no encontrado.");
+    }
 
-$libro = mysqli_fetch_assoc($res_libro);
+    // Almacena los datos del libro
+    $libro = mysqli_fetch_assoc($res_libro);
 
-// Obtener capítulos
-$sql_capitulos = "SELECT id_capitulo, numero_capitulo, titulo_capitulo 
-                  FROM capitulos 
-                  WHERE ID_Contenido = $id_contenido 
-                  ORDER BY numero_capitulo ASC";
-$res_capitulos = mysqli_query($conexion, $sql_capitulos);
+    // Consulta para obtener los capítulos del libro ordenados por número
+    $sql_capitulos = "SELECT id_capitulo, numero_capitulo, titulo_capitulo 
+                      FROM capitulos 
+                      WHERE ID_Contenido = $id_contenido 
+                      ORDER BY numero_capitulo ASC";
+    // Ejecuta la consulta
+    $res_capitulos = mysqli_query($conexion, $sql_capitulos);
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +46,7 @@ $res_capitulos = mysqli_query($conexion, $sql_capitulos);
         <meta charset="UTF-8">
         <title>Capítulos de <?= htmlspecialchars($libro['Titulo']) ?> - Tintero</title>
         <style>
+            /* Estilos básicos para la interfaz */
             body {
                 background-color: #2a1f36;
                 color: white;
@@ -65,25 +74,30 @@ $res_capitulos = mysqli_query($conexion, $sql_capitulos);
     </head>
     <body>
 
+        <!-- Título con nombre del libro -->
         <h1>Capítulos de: <?= htmlspecialchars($libro['Titulo']) ?></h1>
 
         <?php
-        if (mysqli_num_rows($res_capitulos) > 0) {
-            while ($cap = mysqli_fetch_assoc($res_capitulos)) {
-                echo "<div class='capitulo'>";
-                echo "<a href='leer_capitulo.php?id_capitulo=" . $cap['id_capitulo'] . "'>";
+         // Verifica si hay capítulos disponibles
+            if (mysqli_num_rows($res_capitulos) > 0) {
+                // Recorre cada capítulo y lo muestra como enlace
+                while ($cap = mysqli_fetch_assoc($res_capitulos)) {
+                    echo "<div class='capitulo'>";
+                    echo "<a href='leer_capitulo.php?id_capitulo=" . $cap['id_capitulo'] . "'>";
 
-                echo "Capítulo " . $cap['numero_capitulo'] . ": " . htmlspecialchars($cap['titulo_capitulo']);
-                echo "</a>";
-                echo "</div>";
+                    echo "Capítulo " . $cap['numero_capitulo'] . ": " . htmlspecialchars($cap['titulo_capitulo']);
+                    echo "</a>";
+                    echo "</div>";
+                }
+            } else {
+                // Mensaje si no hay capítulos publicados
+                echo "<p>Este libro aún no tiene capítulos publicados.</p>";
             }
-        } else {
-            echo "<p>Este libro aún no tiene capítulos publicados.</p>";
-        }
 
-        mysqli_close($conexion);
+            // Cierra la conexión con la base de datos
+            mysqli_close($conexion);
         ?>
-        <!-- Botón para volver -->
+        <!-- Botón para regresar al menú principal -->
         <div style="text-align: center; margin-top: 40px;">
             <a href="menuSuscrito.php">
                 <button style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">

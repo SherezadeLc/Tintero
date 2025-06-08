@@ -1,28 +1,35 @@
 <?php  
+    // Conexión a la base de datos
     $conexion = mysqli_connect("localhost", "root", "", "tintero");
     if (!$conexion) 
     {
         die("Error de conexión: " . mysqli_connect_error());
     }
-
+    // Si se recibe una petición POST y contiene la clave 'accion'
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) 
     {
+        // Acción para cargar las categorías desde la base de datos
         if ($_POST['accion'] === 'cargar_categorias') 
         {
             $resultado = mysqli_query($conexion, "SELECT * FROM categoria");
-
+            // Genera checkboxes por cada categoría encontrada
             while ($fila = mysqli_fetch_assoc($resultado)) 
             {
                 echo '<label><input type="checkbox" name="categorias[]" value="' . $fila['ID_Categoria'] . '"> ' . htmlspecialchars($fila['Nombre']) . '</label>';
             }
+            // Detiene ejecución para no continuar con el resto del código
             exit;
         }
 
+        // Acción para buscar libros según las categorías seleccionadas
         if ($_POST['accion'] === 'buscar_libros' && isset($_POST['categorias'])) 
         {
+            // Convierte cada ID recibido a entero para evitar inyecciones
             $categorias = array_map('intval', $_POST['categorias']);
+            // Se convierte a una cadena separada por comas
             $ids = implode(',', $categorias);
 
+            // Consulta libros cuyo id_categoria coincida y que estén publicados
             $sql = "SELECT ID_Contenido, Titulo, portada FROM libro WHERE id_categoria IN ($ids) AND Estado = 'Publicado'";
             $resultado = mysqli_query($conexion, $sql);
 
@@ -31,6 +38,7 @@
                 echo '<div class="grid-libros">';
                 while ($libro = mysqli_fetch_assoc($resultado)) 
                 {
+                     // Se imprime una tarjeta por cada libro con portada y título
                     echo "<a href='opciones_lectura.php?id=" . urlencode($libro['ID_Contenido']) . "' style='text-decoration: none; color: inherit;'>";
                     echo "  <div class='flip-card'>";
                     echo "    <div class='flip-card-inner'>";
@@ -62,6 +70,7 @@
         <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
         <link rel="stylesheet" type="text/css" href="./css/Categoria.css">
         <style>
+            /* Estilo de la cuadrícula de libros */
             .grid-libros 
             {
                 display: grid;
@@ -70,6 +79,7 @@
                 padding: 40px;
             }
 
+            /* Tarjeta 3D para portada del libro */
             .flip-card 
             {
                 background-color: transparent;
@@ -127,7 +137,7 @@
     </head>
     <body>
 
-        <!-- Modal visible desde el inicio -->
+        <!-- Ventana emergente de selección de categorías -->
         <div id="modal" class="modal">
             <div class="modal-content">
                 <button class="boton-cerrar" onclick="cerrarModal()">✕</button>
@@ -141,13 +151,16 @@
             </div>
         </div>
 
+        <!-- Aquí se mostrarán los resultados de los libros filtrados -->
         <div id="resultado"></div>
 
         <script>
+            // Carga las categorías cuando se cargue la página
             window.addEventListener('load', () => {
                 cargarCategorias();
             });
 
+            // Función que carga las categorías dinámicamente con fetch
             function cargarCategorias() 
             {
                 const formData = new FormData();
@@ -163,16 +176,19 @@
                 });
             }
 
+            // Cierra el modal de selección de categorías
             function cerrarModal() 
             {
                 document.getElementById('modal').style.display = 'none';
             }
 
+            // Manejo del envío del formulario de selección de categorías
             document.addEventListener('DOMContentLoaded', () => {
                 const form = document.getElementById('formCategorias');
 
                 form.addEventListener('submit', function (e) {
                     e.preventDefault();
+                    // Obtener las categorías seleccionadas
                     const seleccionadas = Array.from(
                         document.querySelectorAll('input[name="categorias[]"]:checked')
                     ).map(cb => cb.value);
@@ -182,6 +198,7 @@
                         return;
                     }
 
+                    // Enviar la búsqueda por categorías al servidor
                     const formData = new FormData();
                     formData.append('accion', 'buscar_libros');
                     seleccionadas.forEach(cat => formData.append('categorias[]', cat));
@@ -193,6 +210,7 @@
                     .then(res => res.text())
                     .then(html => {
                         document.getElementById('resultado').innerHTML = html;
+                        // Oculta el modal después de mostrar los resultados
                         cerrarModal();
                     });
                 });
