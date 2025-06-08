@@ -109,7 +109,7 @@
                         <ul>
                             <li><a href="categorias.php">Categorías</a></li>
                             <li><a href="mis_favoritos.php">Biblioteca</a></li>
-                            <li><a href="perfil.php">Perfil</a></li>
+                            
                             <li><a href="creaUniveros.php">Crea un nuevo universo</a></li>
                             <li><a href="misUniversos.php">Mis universos</a></li>
                             <li><a href="menu_planes_suscripciones.php">Planes suscripción</a></li>
@@ -117,6 +117,7 @@
                     </nav>
                      <!-- Enlace para cerrar sesión -->
                     <div class="nav-right">
+                        <a href="perfil.php">Perfil</a>
                         <a href="logout.php">Cerrar Sesión</a>
                     </div>
                 </div>

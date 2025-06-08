@@ -1,0 +1,144 @@
+/* Elimina márgenes y rellenos por defecto en todos los elementos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general del <body> de perfil.php */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente principal */
+    background: #1a1a2e; /* Fondo oscuro tipo espacio/estrellas */
+    color: #e0e0e0; /* Color del texto general */
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Centra el contenedor .perfil horizontalmente */
+    align-items: center;     /* Centra el contenedor .perfil verticalmente */
+}
+
+/* Muestra el contenido del perfil una vez la página ha cargado */
+body.loaded .perfil {
+    opacity: 1; /* Hace visible el div .perfil */
+}
+
+/* Contenedor principal que agrupa toda la información del perfil del usuario */
+.perfil {
+    width: 450px;
+    background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco semitransparente */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 5px solid rgba(195, 6, 135, 1); /* Borde inicial fucsia */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+    padding: 30px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(42, 27, 48); /* Color del texto interno */
+    opacity: 0; /* Inicialmente oculto, se muestra con JavaScript */
+    transition: opacity 1s ease-in-out; /* Transición suave al mostrarse */
+    animation: backgroundChange 5s infinite alternate, borderChange 5s infinite alternate; /* Animaciones */
+}
+
+/* Título "Mi Perfil" en perfil.php */
+.perfil h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: rgb(195, 6, 135); /* Color fucsia */
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(195, 6, 135, 0.8); /* Sombra rosa brillante */
+}
+
+/* Estilo para cada línea de información del perfil (nombre, correo, tipo, fecha) */
+.perfil p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+/* Mensaje de éxito o error que aparece arriba del formulario (como “¡Contraseña actualizada!”) */
+.mensaje {
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #a8326e; /* Color rosado oscuro */
+}
+
+/* Estilo general de los botones (Editar, Cambiar contraseña, Volver al menú, Guardar, etc.) */
+.btn, button {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: rgba(195, 6, 135, 1); /* Color fucsia base */
+    border: none;
+    border-radius: 25px; /* Botones redondeados */
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(195, 6, 135, 0.7); /* Sombra suave */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+/* Efecto al pasar el cursor sobre cualquier botón */
+.btn:hover, button:hover {
+    background-color: rgba(150, 0, 110, 1); /* Fucsia más oscuro */
+    box-shadow: 0 8px 15px rgba(150, 0, 110, 0.8); /* Más sombra */
+}
+
+/* Estilo específico para el botón "Cancelar" */
+.btn.cancelar {
+    background-color: #666; /* Gris medio */
+    box-shadow: 0 5px 10px rgba(100, 100, 100, 0.5);
+}
+
+/* Hover para el botón Cancelar */
+.btn.cancelar:hover {
+    background-color: #444; /* Gris más oscuro */
+    box-shadow: 0 8px 15px rgba(80, 80, 80, 0.7);
+}
+
+/* Campos del formulario de edición y cambio de contraseña (nombre, correo, password) */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 90%; /* Anchura casi completa */
+    padding: 10px;
+    margin: 8px 0 16px 0; /* Separación con el label y otros inputs */
+    border-radius: 8px;
+    border: 1px solid #ccc; /* Borde gris claro */
+    font-size: 1rem;
+}
+
+/* Etiquetas para los inputs */
+label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px 5%; /* Separación y alineación izquierda */
+    font-weight: 600;
+}
+
+/* Animación para el fondo del contenedor .perfil */
+@keyframes backgroundChange {
+    0% {
+        background-color: rgba(255, 255, 255, 0.85);
+    }
+    100% {
+        background-color: rgba(250, 240, 255, 0.92); /* Ligeramente más rosado */
+    }
+}
+
+/* Animación para cambiar dinámicamente el color del borde de .perfil */
+@keyframes borderChange {
+    0% {
+        border-color: rgba(190, 63, 156, 1); /* Fucsia */
+    }
+    25% {
+        border-color: rgba(242, 182, 103, 1); /* Dorado claro */
+    }
+    50% {
+        border-color: rgba(50, 90, 159, 1); /* Azul */
+    }
+    75% {
+        border-color: rgba(108, 68, 170 , 1); /* Morado */
+    }
+    100% {
+        border-color: rgba(152, 62, 158, 1); /* Fucsia/morado */
+    }
+}
