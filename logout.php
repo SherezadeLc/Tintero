@@ -34,11 +34,6 @@
                 <input type="submit" value="Volver">
             </form>
         </div>
-<!--<script>
-    window.addEventListener('load', () => {
-        document.body.classList.add('loaded');
-    });
-</script>-->
     </body>
 </html>
 
