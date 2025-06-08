@@ -44,7 +44,7 @@ if (isset($_POST['enviar'])) {
 
     $conexion = mysqli_connect("localhost", "root", "", "tintero") or die("No se puede conectar con la base de datos");
 
-    $consulta = "SELECT nombre, id_usuario FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
+    $consulta = "SELECT nombre, id_usuario, Estado FROM usuario WHERE nombre = '$usuario_ingresado' AND contrasena = '$contrasena_ingresada'";
     $resultado = mysqli_query($conexion, $consulta);
     $datosConsulta = mysqli_fetch_assoc($resultado);
 
@@ -52,6 +52,7 @@ if (isset($_POST['enviar'])) {
         $id_usuario = $datosConsulta['id_usuario'];
         $_SESSION["id_usuario"] = $id_usuario;
         $_SESSION["nombre_usuario"] = $datosConsulta['nombre'];
+        $estado = $datosConsulta['Estado'];
 
         if ($_SESSION["nombre_usuario"] == "admin") {
             header('Location: admin_panel.php');
@@ -82,13 +83,13 @@ if (isset($_POST['enviar'])) {
         $resPlan = mysqli_query($conexion, $consulta_plan);
         $plan = mysqli_fetch_assoc($resPlan);
 
-        if ($plan) {
+        if ($plan && $estado== "activo") {
             $_SESSION["Nombre_Plan"] = $plan["Nombre_Plan"];
 
             header('Location: menuSuscrito.php');
             exit;
         } else {
-            echo "<p style='color:red; text-align:center;'>Este usuario no tiene una suscripción activa.</p>";
+            echo "<p style='color:red; text-align:center;'>Este usuario no tiene una suscripción activa o no se encuentra activo.</p>";
         }
     } else {
         echo "<p style='color:red; text-align:center;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
