@@ -86,7 +86,7 @@ if (isset($_GET['buscar']) && !empty(trim($_GET['buscar']))) {
         border-radius: 6px;
         font-weight: bold;
         text-decoration: none;
-    ">← Volver al menú</a>
+    ">Volver al menú</a>
 </div>
 
 </body>

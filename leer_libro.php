@@ -99,6 +99,13 @@ $capitulos = mysqli_query($conexion, $sql_capitulos);
 
         mysqli_close($conexion);
         ?>
-
+        <!-- Botón para volver -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="menuSuscrito.php">
+                <button style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                    Volver al menú
+                </button>
+            </a>
+        </div>
     </body>
 </html>
