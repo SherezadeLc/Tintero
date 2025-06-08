@@ -6,9 +6,18 @@
     <title>Tintero</title>
     <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
     <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
+    <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css">
     <script src="./javascript/script.js"></script>
 </head>
 <body class="loaded">
+    <!-- Fondo de estrellas -->
+        <div id="estrellas">
+            <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+            <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+            <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+            <div class="firefly"></div>
+        </div>
+
     <div class="contenedor-registro">
         <form name="form" action="" method="POST" enctype="multipart/form-data">
             <h2>LOGIN</h2>

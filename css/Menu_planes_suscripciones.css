@@ -1,0 +1,108 @@
+/* Fondo general */
+body {
+    background-color: rgb(42, 27, 48);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding-bottom: 40px;
+}
+
+/* Título principal */
+h2 {
+    text-align: center;
+    color: #ffd969;
+    font-size: 36px;
+    margin: 40px 0 20px;
+    text-shadow: 0 0 10px #ffcc00;
+}
+
+/* Tabla de suscripciones */
+table {
+    width: 90%;
+    margin: 0 auto 40px;
+    border-collapse: collapse;
+    background-color: #2a1b30;
+    color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 217, 105, 0.2);
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #3c2b4d;
+}
+
+th {
+    background-color: #4b3a6b;
+    color: #f6ff7a;
+    text-shadow: 0 0 5px #ff0099;
+}
+
+tr:hover {
+    background-color: #3a2340;
+    transition: background-color 0.3s ease;
+}
+
+/* Botones estilo <a> */
+a.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 6px #ff006c;
+    border: 2px solid #ff006c;
+    background-color: #ff006c;
+}
+
+a.btn:hover {
+    background-color: transparent;
+    color: #ff006c;
+    box-shadow: 0 0 10px #ff006c;
+}
+
+/* Botón Volver */
+#boton-volver {
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
+    color: #00aaff;
+    border: 2px solid #00aaff;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #00aaff;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #00aaff;
+}
+
+#boton-volver:hover {
+    background-color: #00aaff;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00aaff;
+}
+
+/* Responsivo */
+@media screen and (max-width: 768px) {
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    a.btn, #boton-volver {
+        font-size: 14px;
+        padding: 8px 14px;
+    }
+}

@@ -11,6 +11,13 @@
         <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css">
     </head>
     <body class="loaded">
+        <!-- Fondo de estrellas -->
+        <div id="estrellas">
+            <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+            <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+            <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
+            <div class="firefly"></div>
+        </div>
         <div class="contenedor_logout">
             <?php
             session_start();
