@@ -11,27 +11,66 @@ session_start();
     <link rel="stylesheet" type="text/css" href="./css/estilo.css">
     <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css">
     <script src="./javascript/script.js"></script>
+    <style>
+        .contenedor-carrusel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 10px 40px;
+        }
+
+        .carrusel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .flecha:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .flecha.izquierda {
+            left: 0;
+        }
+
+        .flecha.derecha {
+            right: 0;
+        }
+    </style>
 </head>
 <?php
-// Conexión a la base de datos
 $conexion = mysqli_connect("localhost", "root", "", "tintero");
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Fechas para novedades
 $fechaActual = date('Y-m-d');
 $fechaHaceUnMes = date('Y-m-d', strtotime('-1 month'));
 
-// Consulta de novedades (libros publicados en el último mes)
 $consultaFecha = "SELECT Titulo, portada, ID_Contenido FROM libro 
-    WHERE  Estado = 'Publicado' 
+    WHERE Estado = 'Publicado' 
     AND Fecha_Publicacion BETWEEN '$fechaHaceUnMes' AND '$fechaActual'";
 $resultado_novedades = mysqli_query($conexion, $consultaFecha);
 
-// Consulta de recomendaciones (libros publicados aleatorios)
 $sql = "SELECT ID_Contenido, Titulo, portada FROM libro 
-    WHERE  Estado = 'Publicado' 
+    WHERE Estado = 'Publicado' 
     ORDER BY RAND() LIMIT 10";
 $resultado_recomendaciones = mysqli_query($conexion, $sql);
 ?>
@@ -39,10 +78,7 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
 
 <!-- Fondo de estrellas -->
 <div id="estrellas">
-    <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
-    <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
-    <div class="firefly"></div><div class="firefly"></div><div class="firefly"></div>
-    <div class="firefly"></div>
+    <?php for ($i = 0; $i < 10; $i++) echo '<div class="firefly"></div>'; ?>
 </div>
 
 <header>
@@ -51,14 +87,12 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
     </div><br>
     <div class="contenedor-h2">
         <div class="contenedor-nav">
-            <!-- Buscador -->
             <div class="nav-left">
                 <form method="get" action="Buscar.php" class="buscador">
                     <input type="text" id="input-buscar" name="buscar" placeholder="Buscar por título o autor" />
                     <input id="boton-buscar" type="submit" value="Buscar" />
                 </form>
             </div>
-            <!-- Enlaces -->
             <nav class="nav-center">
                 <ul>
                     <li><a href="categorias.php">Categorías</a></li>
@@ -69,7 +103,6 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
                     <li><a href="menu_planes_suscripciones.php">Planes suscripción</a></li>
                 </ul>
             </nav>
-            <!-- Login -->
             <div class="nav-right">
                 <a href="logout.php">Cerrar Sesión</a>
             </div>
@@ -80,9 +113,9 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
 <!-- NOVEDADES -->
 <h2 class="colorear">Novedades</h2>
 <div class="contenedor-h2">
-    <section id="Novedades" class="contenedor-carrusel">
-        <button class="flecha" id="izquierda">&#10094;</button>
-        <div class="carrusel">
+    <section class="contenedor-carrusel">
+        <button class="flecha izquierda" onclick="document.querySelector('#carrusel-novedades').scrollBy({left: -300, behavior: 'smooth'});">&#10094;</button>
+        <div class="carrusel" id="carrusel-novedades">
             <?php
             if ($resultado_novedades && mysqli_num_rows($resultado_novedades) > 0) {
                 while ($fila = mysqli_fetch_assoc($resultado_novedades)) {
@@ -104,16 +137,16 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
             }
             ?>
         </div>
-        <button class="flecha" id="derecha">&#10095;</button>
+        <button class="flecha derecha" onclick="document.querySelector('#carrusel-novedades').scrollBy({left: 300, behavior: 'smooth'});">&#10095;</button>
     </section>
 </div><br>
 
 <!-- RECOMENDACIONES -->
 <h2 class="colorear">Recomendaciones</h2>
 <div class="contenedor-h2">
-    <section id="Recomendaciones" class="contenedor-carrusel">
-        <button class="flecha" id="izquierda">&#10094;</button>
-        <div class="carrusel">
+    <section class="contenedor-carrusel">
+        <button class="flecha izquierda" onclick="document.querySelector('#carrusel-recomendaciones').scrollBy({left: -300, behavior: 'smooth'});">&#10094;</button>
+        <div class="carrusel" id="carrusel-recomendaciones">
             <?php
             if ($resultado_recomendaciones && mysqli_num_rows($resultado_recomendaciones) > 0) {
                 while ($fila = mysqli_fetch_assoc($resultado_recomendaciones)) {
@@ -135,7 +168,7 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
             }
             ?>
         </div>
-        <button class="flecha" id="derecha">&#10095;</button>
+        <button class="flecha derecha" onclick="document.querySelector('#carrusel-recomendaciones').scrollBy({left: 300, behavior: 'smooth'});">&#10095;</button>
     </section>
 </div>
 
