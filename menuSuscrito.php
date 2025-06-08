@@ -53,7 +53,7 @@ $resultado_recomendaciones = mysqli_query($conexion, $sql);
         <div class="contenedor-nav">
             <!-- Buscador -->
             <div class="nav-left">
-                <form method="get" action="Busqueda.php" class="buscador">
+                <form method="get" action="Buscar.php" class="buscador">
                     <input type="text" id="input-buscar" name="buscar" placeholder="Buscar por título o autor" />
                     <input id="boton-buscar" type="submit" value="Buscar" />
                 </form>

@@ -79,7 +79,7 @@ if (isset($_GET['buscar']) && !empty(trim($_GET['buscar']))) {
 </div><br>
 <!-- Botón Volver -->
 <div style="text-align: center; margin-top: 30px;">
-    <a href="index.php" class="btn-volver" style="
+    <a href="menuSuscrito.php" class="btn-volver" style="
         background-color: #007bff;
         color: white;
         padding: 10px 20px;
