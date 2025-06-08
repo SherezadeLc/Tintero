@@ -11,6 +11,49 @@ session_start();
     <link rel="stylesheet" type="text/css" href="./css/estilo.css">
     <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css">
     <script src="./javascript/script.js"></script>
+    <style>
+        .contenedor-carrusel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 10px 40px;
+        }
+
+        .carrusel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .flecha:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .flecha.izquierda {
+            left: 0;
+        }
+
+        .flecha.derecha {
+            right: 0;
+        }
+    </style>
 </head>
 <?php
 // Conexión a la base de datos
@@ -75,9 +118,9 @@ $resultado_novedades = mysqli_query($conexion, $consultaFecha);
 <!-- NOVEDADES -->
 <h2 class="colorear">Novedades</h2>
 <div class="contenedor-h2">
-    <section id="Novedades" class="contenedor-carrusel">
-        <button class="flecha" id="izquierda">&#10094;</button>
-        <div class="carrusel">
+    <section class="contenedor-carrusel">
+        <button class="flecha izquierda" onclick="document.querySelector('#carrusel-novedades').scrollBy({left: -300, behavior: 'smooth'});">&#10094;</button>
+        <div class="carrusel" id="carrusel-novedades">
             <?php
             if ($resultado_novedades && mysqli_num_rows($resultado_novedades) > 0) {
                 while ($fila = mysqli_fetch_assoc($resultado_novedades)) {
@@ -89,7 +132,7 @@ $resultado_novedades = mysqli_query($conexion, $consultaFecha);
                     echo "          </a>";
                     echo "      </div>";
                     echo "      <div class='flip-card-back'>";
-                    echo "          <div class='titulo-historia'>" . htmlspecialchars($fila['Titulo']) . "<br><small>por " . htmlspecialchars($fila['Autor']) . "</small></div>";
+                    echo "          <div class='titulo-historia'>" . htmlspecialchars($fila['Titulo']) . "</div>";
                     echo "      </div>";
                     echo "  </div>";
                     echo "</div>";
@@ -99,7 +142,7 @@ $resultado_novedades = mysqli_query($conexion, $consultaFecha);
             }
             ?>
         </div>
-        <button class="flecha" id="derecha">&#10095;</button>
+        <button class="flecha derecha" onclick="document.querySelector('#carrusel-novedades').scrollBy({left: 300, behavior: 'smooth'});">&#10095;</button>
     </section>
 </div><br>
 
