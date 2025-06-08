@@ -131,19 +131,3 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Enlace a planes de suscripción */
-a {
-    display: inline-block;
-    text-decoration: none;
-    color: #ff006c;
-    background-color: #4b3a6b;
-    padding: 10px 20px;
-    border-radius: 12px;
-    margin-left: 5%;
-    margin-top: 20px;
-    transition: background-color 0.3s;
-}
-
-a:hover {
-    background-color: #5d4684;
-}

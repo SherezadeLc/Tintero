@@ -89,11 +89,6 @@ $conexion = mysqli_connect("localhost", "root", "", "tintero");
     </tbody>
 </table>
 
-
-    <!-- Promociones y suscripciones -->
-    <h2>Administrar Suscripciones</h2>
-    <a href="menu_planes_suscripciones.php">Ir a planes de suscripción</a>
-
 </body>
 </html>
 
