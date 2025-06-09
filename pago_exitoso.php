@@ -12,7 +12,7 @@
          <!-- Icono del sitio -->
         <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
         <!-- Estilos CSS externos -->
-        <link rel="stylesheet" type="text/css" href="./css/Registro_Login.css">
+        <link rel="stylesheet" type="text/css" href="./css/Pagar.css">
         <script src="./javascript/script.js"></script>
         <!-- Estilos CSS internos -->
         <style>
@@ -31,7 +31,7 @@
             }
             .btn {
                 padding: 10px 20px;
-                background-color: #28a745;
+                background-color: rgba(195, 6, 135, 1);
                 border: none;
                 color: white;
                 border-radius: 5px;
@@ -39,7 +39,7 @@
                 text-decoration: none;
             }
             .btn:hover {
-                background-color: #218838;
+                background-color: rgba(195, 6, 135, 1);
             }
         </style>
     </head>

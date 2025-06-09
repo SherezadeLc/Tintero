@@ -1,0 +1,72 @@
+
+/* Estilo general del cuerpo */
+body {
+    background-color: #2a1f36;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+}
+
+/* Contenedor principal del formulario */
+.contenedor-registro {
+    background-color: #3b2a49;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Títulos */
+h2, h3 {
+    color: #ffd700;
+    text-align: center;
+}
+
+/* Línea divisoria */
+hr {
+    border: 1px solid #fff;
+    margin: 20px 0;
+}
+
+/* Inputs del formulario */
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Estilo del botón */
+.btn {
+    background-color: #a85fb3;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #913d9c;
+}
+
+/* Estilo del resumen del plan */
+p {
+    margin: 10px 0;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* Negrita destacada */
+strong {
+    color: #ffcc70;
+}

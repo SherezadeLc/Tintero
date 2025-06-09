@@ -71,7 +71,7 @@
 
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="./img/icono.jpg" type="image/x-icon" id="ico">
-
+        <link rel="stylesheet" href="./css/Pagar.css">
         <title>Confirmación de Pago</title>
     </head>
     <!-- Contenedor del formulario de datos de la tarjeta -->
