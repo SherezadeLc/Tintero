@@ -255,7 +255,10 @@
                 <p>Historias en cada gota</p>
                 <p>Donde nacen historias en cada gota de inspiración </p>
                 <h3>Redes sociales</h3>
-                <p>Instagram: </p>
+                <p>Instagram: @tintero_oficial</p>
+                <p>X: @tintero_oficial</p>
+                <p>Tiktok: @tintero_oficial</p>
+                <p>Facebook: @tintero_oficial</p>
             </div>
 
             <div class="footer-center">
