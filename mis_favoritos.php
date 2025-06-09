@@ -145,7 +145,7 @@
     </head>
     <body>
         <div class="contenedor">
-            <h2 style="color:white; text-align:center;">Mis Favoritos</h2>
+            <h2 style="color:white; text-align:center;">Mi Biblioteca</h2>
 
               <!-- Si hay libros en la lista de favoritos -->
             <?php if (mysqli_num_rows($resultado) > 0): ?>
@@ -162,13 +162,13 @@
                         <!-- Formulario para eliminar libro de favoritos -->
                         <form method="POST" action="eliminar_favoritos.php">
                             <input type="hidden" name="id_contenido" value="<?= $libro['ID_Contenido'] ?>">
-                            <button type="submit" class="btn-eliminar">Eliminar de Favoritos</button>
+                            <button type="submit" class="btn-eliminar">Eliminar de biblioteca</button>
                         </form>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
                <!-- Mensaje si no hay libros en favoritos -->
-                <p style="color:white; text-align:center;">No tienes libros en favoritos.</p>
+                <p style="color:white; text-align:center;">No tienes libros en biblioteca.</p>
             <?php endif; ?>
         </div>
 
