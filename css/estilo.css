@@ -282,3 +282,75 @@ h2 {
 .diapositiva:hover {
     cursor: pointer;
 }
+
+/* ======= HAMBURGUESA Y RESPONSIVE ======= */
+
+/* Botón hamburguesa oculto por defecto */
+.menu-toggle {
+    display: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Menú responsive */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #2a1b30;
+        gap: 20px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .menu.abierto {
+        display: flex;
+    }
+
+    .nav-left, .nav-center, .nav-right {
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .nav-center ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        padding: 0;
+    }
+
+    .nav-center li a,
+    .nav-right a {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .buscador {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #input-buscar, #boton-buscar {
+        width: 100%;
+    }
+
+    header .logo {
+        width: 80%;
+        height: auto;
+    }
+
+    .contenedor-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+}
