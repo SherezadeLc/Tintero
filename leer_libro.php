@@ -121,10 +121,15 @@
         <!-- Botón para volver al menú principal -->
         <div style="text-align: center; margin-top: 40px;">
             <a href="menuSuscrito.php">
-                <button style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                <button id="boton_cancelar" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
                     Volver al menú
                 </button>
             </a>
         </div>
+        <script>
+            document.getElementById("boton_cancelar").addEventListener("click", function () {
+                history.back();
+            });
+        </script>
     </body>
 </html>
