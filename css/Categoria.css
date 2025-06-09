@@ -181,3 +181,73 @@ body {
     padding: 10px;
     box-shadow: 0 0 25px rgba(0, 201, 255, 0.3), 0 0 5px rgba(0, 201, 255, 0.1);
 }
+/* ========== MEDIA QUERIES PARA RESPONSIVE DESIGN ========== */
+@media screen and (max-width: 768px) {
+
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .modal-content h3 {
+        font-size: 20px;
+    }
+
+    #contenedorCategorias {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 10px;
+    }
+
+    .boton-cerrar {
+        font-size: 20px;
+        top: 10px;
+        right: 15px;
+    }
+
+    .modal-content button[type="submit"] {
+        width: 100%;
+    }
+
+    /* Flip-cards container */
+    .flip-card-container,
+    .contenedor-carrusel {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .flip-card-inner {
+        aspect-ratio: 3/4;
+    }
+
+    /* Resultados texto */
+    .contenedor-h2 h2.colorear {
+        font-size: 22px;
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    /* Botón volver */
+    .btn-volver {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 15px;
+        padding: 10px 15px;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .footer-left, .footer-center, .footer-right {
+        width: 100%;
+    }
+
+    .footer p, .footer a {
+        font-size: 13px;
+    }
+}

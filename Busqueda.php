@@ -6,6 +6,7 @@
         <title>Resultados de Búsqueda - Tintero</title>
         <!-- Estilos personalizados -->
         <link rel="stylesheet" type="text/css" href="./css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="./css/Categoria.css">
         <link rel="stylesheet" type="text/css" href="./css/fondo_estrellas.css"> <!-- Fondo animado con estrellas -->
     </head>
     <style>
