@@ -93,9 +93,9 @@
             </section>
         </div><br>
 
-        <!-- Botón para volver al menú del usuario suscrito -->
+        <!-- Botón para volver al menú del usuario no suscrito -->
         <div style="text-align: center; margin-top: 30px;">
-            <a href="menuSuscrito.php" class="btn-volver" style="
+            <a href="index.php" class="btn-volver" style="
                background-color: #007bff;
                color: white;
                padding: 10px 20px;
