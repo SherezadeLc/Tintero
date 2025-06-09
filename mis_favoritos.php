@@ -90,6 +90,58 @@
                 text-align: center;
             }
         </style>
+        <style>
+        .footer {
+            background-color: #2a1f36;
+            color: white;
+            padding: 30px 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .footer h3, .footer h4 {
+            color: #FFD764;
+            margin-bottom: 10px;
+        }
+
+        .footer p, .footer a {
+            color: #ccc;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-center ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-center ul li {
+            margin: 6px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-left, .footer-center, .footer-right {
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
     </head>
     <body>
         <div class="contenedor">
