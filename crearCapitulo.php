@@ -44,8 +44,8 @@
         $titulo = mysqli_real_escape_string($conexion, $_POST['titulo_capitulo']);
         $contenido = mysqli_real_escape_string($conexion, $_POST['contenido_capitulo']);
         $numero_capitulo = intval($_POST['numero_capitulo']);
-        // Asegura que sea numérico
-        $id_contenido = intval($id_contenido);
+        
+        
         // Fecha actual
         $fecha_publicacion = date("Y-m-d");
 
