@@ -11,7 +11,7 @@
     // Definición manual de los planes disponibles
     $planes = [
         'basico' => [
-            'nombre' => 'Plan Básico',
+            'nombre' => 'Plan Basico',
             'beneficios' => 'Acceso a la plataforma y funciones básicas de creación y publicación de historias. Herramientas de edición y formateo de texto básicas. Posibilidad de compartir contenido con otros usuarios. Acceso limitado a plantillas y funciones de diseño.',
             'precio_mensual' => 0,
             'precio_anual' => 0,

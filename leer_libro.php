@@ -44,7 +44,7 @@
     if ($plan == 'Plan Premium' || $plan == 'Plan Estandar' || $plan == 'Mes prueba') {
         $permitido = true;
         // Si es Plan Básico, solo se permite si el libro está marcado como visible para ese plan
-    } elseif ($plan === 'Plan_Basico' && $libro['visible_basico'] == 1) {
+    } elseif ($plan === 'Plan Basico' && $libro['visible_basico'] == 1) {
         $permitido = true;
     }
 
