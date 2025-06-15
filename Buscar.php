@@ -73,16 +73,16 @@
         </div>
 
         <?php
-    // Conexión a la base de datos
+        // Conexión a la base de datos
         $conexion = mysqli_connect("localhost", "root", "", "tintero");
         if (!$conexion) {
             die("Error de conexión: " . mysqli_connect_error());
         }
 
-    // Array para guardar los libros encontrados
+        // Array para guardar los libros encontrados
         $libros_encontrados = [];
 
-    // Si el parámetro "buscar" existe en la URL y no está vacío
+        // Si el parámetro "buscar" existe en la URL y no está vacío
         if (isset($_GET['buscar']) && !empty(trim($_GET['buscar']))) {
             // Escapar caracteres especiales para evitar inyección SQL
             $termino = mysqli_real_escape_string($conexion, $_GET['buscar']);
@@ -119,7 +119,8 @@
         <div class="contenedor-h2">
             <h2 class="colorear">Resultados de búsqueda para "<?php echo htmlspecialchars($_GET['buscar']); ?>"</h2>
 
-            <section class="contenedor-carrusel">
+            <!-- ✅ AQUÍ ESTÁ EL CAMBIO: se añaden ambas clases -->
+            <section class="contenedor-carrusel flip-card-container">
                 <!-- Si se encontraron libros -->
                 <?php if (!empty($libros_encontrados)): ?>
                     <?php foreach ($libros_encontrados as $libro): ?>
@@ -149,6 +150,7 @@
             </section>
         </div><br>
 
+
         <!-- Botón para volver al menú del usuario suscrito -->
         <div style="text-align: center; margin-top: 30px;">
             <a href="menuSuscrito.php" class="btn-volver" style="
@@ -163,33 +165,33 @@
 
     </body>
     <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-left">
-                    <h3>Tintero</h3>
-                    <p>Historias en cada gota</p>
-                    <p>Donde nacen historias en cada gota de inspiración </p>
-                    <h3>Redes sociales</h3>
-                    <p>Instagram: @tintero_oficial</p>
-                    <p>X: @tintero_oficial</p>
-                    <p>Tiktok: @tintero_oficial</p>
-                    <p>Facebook: @tintero_oficial</p>
-                </div>
-
-                <div class="footer-center">
-                    <h4>Enlaces</h4>
-                    <ul>
-                        <li><a href="index.php">Inicio</a></li>
-                        <li><a href="categorias.php">Categorías</a></li>
-                        <li><a href="perfil.php">Mi Perfil</a></li>
-                        <li><a href="login.php">Iniciar Sesión</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-right">
-                    <h4>Contacto</h4>
-                    <p>Email: soporte@tintero.com</p>
-                    <p>&copy; <?= date("Y") ?> Tintero. Todos los derechos reservados.</p>
-                </div>
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>Tintero</h3>
+                <p>Historias en cada gota</p>
+                <p>Donde nacen historias en cada gota de inspiración </p>
+                <h3>Redes sociales</h3>
+                <p>Instagram: @tintero_oficial</p>
+                <p>X: @tintero_oficial</p>
+                <p>Tiktok: @tintero_oficial</p>
+                <p>Facebook: @tintero_oficial</p>
             </div>
-        </footer>
+
+            <div class="footer-center">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="categorias.php">Categorías</a></li>
+                    <li><a href="perfil.php">Mi Perfil</a></li>
+                    <li><a href="login.php">Iniciar Sesión</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-right">
+                <h4>Contacto</h4>
+                <p>Email: soporte@tintero.com</p>
+                <p>&copy; <?= date("Y") ?> Tintero. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 </html>
