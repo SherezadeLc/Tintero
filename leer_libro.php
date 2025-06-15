@@ -39,7 +39,7 @@
     $libro = mysqli_fetch_assoc($resultado);
 
     // Valida si el usuario tiene permiso para ver el contenido completo del libro
-    $permitido = false;
+    $permitido = true;
     // Si el plan es Premium, Estándar o Mes prueba, tiene acceso total
     if ($plan == 'Plan Premium' || $plan == 'Plan Estandar' || $plan == 'Mes prueba') {
         $permitido = true;
